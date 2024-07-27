@@ -46,9 +46,10 @@ const Signup: React.FC = () => {
         }
       );
 
-      if (response.status === 200) {
+      if (response.code === 200) {
+        console.log(response);
         setLoading(false);
-        setUser(response.user);
+        setUser(response.data);
         navigate("/");
       } else {
         setLoading(false);
