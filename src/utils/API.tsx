@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { notify } from "./notify";
 
 const api: AxiosInstance = axios.create({
-  baseURL: process.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 

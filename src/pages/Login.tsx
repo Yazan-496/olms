@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLayout } from "layout";
 import { LoadingSpinner } from "components/Svgs";
+import API from "utils/API";
 
 const Login: React.FC = () => {
   const { notify, setUser, user } = useLayout();
@@ -25,37 +26,25 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     try {
-      // const response = await API.post(
-      //   "https://example.com/api/login",
-      //   formData,
-      //   (data) => data?.data,
-      //   (e) => {
-      //     notify(e);
-      //   }
-      // );
       setLoading(true);
-      setTimeout(() => {
-        const response = {
-          status: 200,
-          user: {
-            access_token: true,
-            name: "User Name",
-            img: "/images/user-36-05.jpg",
-          },
-        };
-
-        if (response.status === 200) {
-          setLoading(false);
-          setUser(response.user);
-          navigate("/");
-        } else {
-          setLoading(false);
-          notify({ type: "error", message: "error", timeout: 2000 });
+      const response = await API.post(
+        "/api/login",
+        formData,
+        (data) => data?.data,
+        (e) => {
+          notify(e);
         }
-      }, 3000);
+      );
+
+      if (response.status === 200) {
+        setLoading(false);
+        setUser(response.user);
+        navigate("/");
+      } else {
+        setLoading(false);
+      }
     } catch (err) {
       setLoading(false);
-      notify({ type: "error", message: "error", timeout: 2000 });
     }
   };
 

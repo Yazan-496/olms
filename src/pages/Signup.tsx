@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLayout } from "layout";
 import { LoadingSpinner } from "components/Svgs";
+import API from "utils/API";
 
 const Signup: React.FC = () => {
   const { notify, setUser } = useLayout();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -36,28 +37,24 @@ const Signup: React.FC = () => {
 
     try {
       setLoading(true);
-      setTimeout(() => {
-        const response = {
-          status: 200,
-          user: {
-            access_token: true,
-            name: "User Name",
-            img: "/images/user-36-05.jpg",
-          },
-        };
-
-        if (response.status === 200) {
-          setLoading(false);
-          setUser(response.user);
-          navigate("/");
-        } else {
-          setLoading(false);
-          notify({ type: "error", message: "Signup failed", timeout: 2000 });
+      const response = await API.post(
+        "/api/signup",
+        formData,
+        (data) => data?.data,
+        (e) => {
+          notify(e);
         }
-      }, 3000);
+      );
+
+      if (response.status === 200) {
+        setLoading(false);
+        setUser(response.user);
+        navigate("/");
+      } else {
+        setLoading(false);
+      }
     } catch (err) {
       setLoading(false);
-      notify({ type: "error", message: "Signup failed", timeout: 2000 });
     }
   };
 
@@ -70,18 +67,18 @@ const Signup: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="username"
+              htmlFor="name"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             >
               Username
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="name"
+              name="name"
               className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Your username"
-              value={formData.username}
+              placeholder="Your name"
+              value={formData.name}
               onChange={handleChange}
               required
             />
