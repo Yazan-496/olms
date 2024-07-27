@@ -179,7 +179,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         }`}
       >
         {/* Sidebar header */}
-        <div className="flex justify-between mb-10 pr-3 sm:px-2">
+        <div className="flex justify-between mb-5 mt-5 pr-3 sm:px-2">
           {/* Close button */}
           <button
             ref={trigger}
@@ -198,8 +198,12 @@ const Sidebar: React.FC<SidebarProps> = ({
             </svg>
           </button>
           {/* Logo */}
-          <NavLink end to="/" className="block">
-            <img alt={"icon"} src={FavIcon} width={32} height={32} />
+          <NavLink
+            end
+            to="/"
+            className="w-full flex items-center justify-center h-full"
+          >
+            <img alt={"icon"} src={FavIcon} width={42} height={42} />
           </NavLink>
         </div>
 
