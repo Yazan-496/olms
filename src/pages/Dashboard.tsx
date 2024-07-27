@@ -29,8 +29,6 @@ function Dashboard() {
             </div>
           </div>
         </main>
-
-        {/* <Banner /> */}
       </div>
     </div>
   );
