@@ -28,7 +28,7 @@ const Login: React.FC = () => {
     try {
       setLoading(true);
       const response = await API.post(
-        "/api/login",
+        "/api/auth/login",
         formData,
         (data) => data?.data,
         (e) => {

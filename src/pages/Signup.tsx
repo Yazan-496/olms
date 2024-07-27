@@ -38,7 +38,7 @@ const Signup: React.FC = () => {
     try {
       setLoading(true);
       const response = await API.post(
-        "/api/signup",
+        "/api/auth/signup",
         formData,
         (data) => data?.data,
         (e) => {
