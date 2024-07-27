@@ -24,7 +24,7 @@ interface SidebarProps {
 
 const pages = [
   {
-    name: "Users Managment",
+    name: "Users",
     logo: <UsersLogoSvg />,
     chilren: [
       {
@@ -257,7 +257,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                             </div>
                           </a>
                           <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                            <ul className={`pl-2 mt-2 ${!open && "hidden"}`}>
+                            <ul className={`pl-6 mt-2 ${!open && "hidden"}`}>
                               {page.chilren.map((child, i) => {
                                 return (
                                   <li
