@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Transition from "../utils/Transition";
-import UserAvatar from "/images/user-avatar-32.png";
 import { useLayout } from "layout";
 
 // Define the props type
@@ -43,6 +42,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
     return () => document.removeEventListener("keydown", keyHandler);
   }, [dropdownOpen]);
 
+  const defaultUserImage = import.meta.env.VITE_DEFAULT_USER_IMAGE;
   return (
     <div className="relative inline-flex">
       <button
@@ -54,7 +54,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
       >
         <img
           className="w-8 h-8 rounded-full"
-          src={UserAvatar}
+          src={user?.img || defaultUserImage}
           width="32"
           height="32"
           alt="User"

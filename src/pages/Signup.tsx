@@ -39,7 +39,11 @@ const Signup: React.FC = () => {
       setTimeout(() => {
         const response = {
           status: 200,
-          user: { access_token: true, name: "New User" },
+          user: {
+            access_token: true,
+            name: "User Name",
+            img: "/images/user-36-05.jpg",
+          },
         };
 
         if (response.status === 200) {

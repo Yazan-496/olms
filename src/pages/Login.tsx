@@ -37,7 +37,11 @@ const Login: React.FC = () => {
       setTimeout(() => {
         const response = {
           status: 200,
-          user: { access_token: true, name: "User Name" },
+          user: {
+            access_token: true,
+            name: "User Name",
+            img: "/images/user-36-05.jpg",
+          },
         };
 
         if (response.status === 200) {
