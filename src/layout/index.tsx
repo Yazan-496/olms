@@ -46,6 +46,7 @@ export const LayoutProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
   useEffect(() => {
+    // console.log(user, "user");
     if (user) {
       localStorage.setItem("USER", JSON.stringify(user));
     } else {
