@@ -36,8 +36,8 @@ const Login: React.FC = () => {
         }
       );
 
+      console.log(response);
       if (response.code === 200) {
-        console.log(response);
         setLoading(false);
         setUser(response.data);
         navigate("/");
