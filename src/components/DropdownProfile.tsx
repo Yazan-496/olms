@@ -95,7 +95,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
               {user.name}
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 italic">
-              {user?.role || "Admin"}
+              {user?.role?.name || "Admin"}
             </div>
           </div>
           <ul>

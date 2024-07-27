@@ -40,7 +40,7 @@ const Signup: React.FC = () => {
       const response = await API.post(
         "/api/auth/signup",
         formData,
-        (data) => data?.data,
+        (data) => data,
         (e) => {
           notify(e);
         }
