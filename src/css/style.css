@@ -1,10 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=fallback');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=fallback");
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 
 /* Additional styles */
-@import 'additional-styles/utility-patterns.css';
-@import 'additional-styles/flatpickr.css';
+@import "additional-styles/utility-patterns.css";
+@import "additional-styles/flatpickr.css";
 
-@import 'tailwindcss/utilities';
+@import "tailwindcss/utilities";
+@media screen and (max-width: 768px) {
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+}
+
+.spinner {
+  border: 2px solid #40404069;
+  border-left-color: transparent;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import { useLayout } from "layout";
 
 const Logout = () => {
-  const { user, setUser } = useLayout();
-  setUser(null);
+  const { setUser } = useLayout();
+
+  useEffect(() => {
+    setUser(null);
+  }, [setUser]);
+
   return <>logout</>;
 };
+
 export default Logout;

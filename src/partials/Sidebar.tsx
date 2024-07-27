@@ -256,7 +256,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                             </div>
                           </a>
                           <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                            <ul className={`pl-4 mt-1 ${!open && "hidden"}`}>
+                            <ul className={`pl-2 mt-2 ${!open && "hidden"}`}>
                               {page.chilren.map((child, i) => {
                                 return (
                                   <li

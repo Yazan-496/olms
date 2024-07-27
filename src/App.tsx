@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Logout from "pages/Logout";
 import NotFound from "pages/404";
+import Signup from "pages/Signup";
 export const router = [
   {
     path: "/",
@@ -21,14 +22,14 @@ export const router = [
     title: "Login",
   },
   {
-    path: "/login",
-    element: <RedirectToHomeIfAuthenticated element={<Login />} />,
+    path: "/signup",
+    element: <Signup />,
     title: "Login",
   },
   {
     path: "/logout",
     element: <ProtectedRoute element={<Logout />} />,
-    title: "Login",
+    title: "Logout",
   },
   {
     path: "/users",

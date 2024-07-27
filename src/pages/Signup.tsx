@@ -3,41 +3,43 @@ import { useNavigate } from "react-router-dom";
 import { useLayout } from "layout";
 import { LoadingSpinner } from "components/Svgs";
 
-const Login: React.FC = () => {
-  const { notify, setUser, user } = useLayout();
+const Signup: React.FC = () => {
+  const { notify, setUser } = useLayout();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
+    username: "",
     email: "",
     password: "",
-    remember: true,
+    confirmPassword: "",
   });
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, type, checked, value } = e.target;
+    const { name, type, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    if (formData.password !== formData.confirmPassword) {
+      notify({
+        type: "error",
+        message: "Passwords do not match",
+        timeout: 2000,
+      });
+      return;
+    }
+
     try {
-      // const response = await API.post(
-      //   "https://example.com/api/login",
-      //   formData,
-      //   (data) => data?.data,
-      //   (e) => {
-      //     notify(e);
-      //   }
-      // );
       setLoading(true);
       setTimeout(() => {
         const response = {
           status: 200,
-          user: { access_token: true, name: "User Name" },
+          user: { access_token: true, name: "New User" },
         };
 
         if (response.status === 200) {
@@ -46,22 +48,40 @@ const Login: React.FC = () => {
           navigate("/");
         } else {
           setLoading(false);
-          notify({ type: "error", message: "error", timeout: 2000 });
+          notify({ type: "error", message: "Signup failed", timeout: 2000 });
         }
       }, 3000);
     } catch (err) {
       setLoading(false);
-      notify({ type: "error", message: "error", timeout: 2000 });
+      notify({ type: "error", message: "Signup failed", timeout: 2000 });
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
-      <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md">
+      <div className="bg-white dark:bg-gray-900 w-[80%] shadow-md rounded-lg px-8 py-6 max-w-md">
         <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">
-          Welcome Back!
+          Create an Account
         </h1>
         <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="Your username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
           <div className="mb-4">
             <label
               htmlFor="email"
@@ -97,48 +117,47 @@ const Login: React.FC = () => {
               onChange={handleChange}
               required
             />
-            <a
-              href="#"
-              className="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Forgot Password?
-            </a>
           </div>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="remember"
-                name="remember"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:outline-none"
-                checked={formData.remember}
-                onChange={handleChange}
-              />
-              <label
-                htmlFor="remember"
-                className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
-              >
-                Remember me
-              </label>
-            </div>
-            <div
-              onClick={() => navigate("/signup")}
-              className="cursor-pointer  hover:underline text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          <div className="mb-4">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             >
-              Create Account
-            </div>
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="Confirm your password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
           </div>
           <button
             disabled={loading}
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-75"
           >
-            {loading ? <LoadingSpinner /> : "Login"}
+            {loading ? <LoadingSpinner /> : "Sign Up"}
           </button>
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Already have an account?{" "}
+              <div
+                onClick={() => navigate("/login")}
+                className="cursor-pointer hover:underline text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Login
+              </div>
+            </p>
+          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Transition from "../utils/Transition";
 import UserAvatar from "/images/user-avatar-32.png";
+import { useLayout } from "layout";
 
 // Define the props type
 interface DropdownProfileProps {
@@ -12,7 +13,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
   align = "left",
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-
+  const { user } = useLayout();
   const trigger = useRef<HTMLButtonElement>(null);
   const dropdown = useRef<HTMLDivElement>(null);
 
@@ -60,7 +61,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
         />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">
-            Acme Inc.
+            {user.name}
           </span>
           <svg
             className="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500"
@@ -91,10 +92,10 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200 dark:border-gray-700/60">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              Acme Inc.
+              {user.name}
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 italic">
-              Administrator
+              {user?.role || "Admin"}
             </div>
           </div>
           <ul>
@@ -110,7 +111,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
             <li>
               <Link
                 className="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-1 px-3"
-                to="/signin"
+                to="/logout"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 Sign Out

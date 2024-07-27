@@ -48,6 +48,8 @@ export const LayoutProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (user) {
       localStorage.setItem("USER", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("USER");
     }
   }, [user]);
   return (
