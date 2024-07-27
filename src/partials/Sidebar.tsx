@@ -1,0 +1,301 @@
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import FavIcon from "/images/favicon.png";
+import SidebarLinkGroup from "./SidebarLinkGroup";
+import {
+  AccountLogoSvg,
+  ArrowUpDownSvg,
+  CategoriesLogoSvg,
+  CoursesLogoSvg,
+  FinanceLogoSvg,
+  LogoutLogoSvg,
+  ProfileLogoSvg,
+  SettingLogoSvg,
+  StudentsLogoSvg,
+  TransactionsLogoSvg,
+  TutorssLogoSvg,
+  UsersLogoSvg,
+} from "components/Svgs";
+interface SidebarProps {
+  sidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  variant?: string;
+}
+
+const pages = [
+  {
+    name: "Users Managment",
+    logo: <UsersLogoSvg />,
+    chilren: [
+      {
+        name: "Users",
+        logo: <UsersLogoSvg />,
+        route: "/users",
+      },
+      {
+        name: "Students",
+        logo: <StudentsLogoSvg />,
+        route: "/users",
+      },
+      {
+        name: "Tutors",
+        logo: <TutorssLogoSvg />,
+        route: "/users",
+      },
+    ],
+  },
+  {
+    name: "Courses",
+    logo: <CoursesLogoSvg />,
+    chilren: [
+      {
+        name: "Courses",
+        logo: <CoursesLogoSvg />,
+        route: "/courses",
+      },
+      {
+        name: "Categories",
+        logo: <CategoriesLogoSvg />,
+        route: "/categories",
+      },
+    ],
+  },
+  {
+    name: "Finance",
+    logo: <FinanceLogoSvg />,
+    chilren: [
+      {
+        name: "Student Financial",
+        logo: <FinanceLogoSvg />,
+        route: "/finance",
+      },
+      {
+        name: "Transactions",
+        logo: <TransactionsLogoSvg />,
+        route: "/trransactions",
+      },
+    ],
+  },
+  {
+    name: "Profile",
+    logo: <ProfileLogoSvg />,
+    chilren: [
+      {
+        name: "Personal Informations",
+        logo: <ProfileLogoSvg />,
+        route: "/personal-informations",
+      },
+    ],
+  },
+  {
+    name: "Settings",
+    logo: <SettingLogoSvg />,
+    chilren: [
+      {
+        name: "My Account",
+        logo: <AccountLogoSvg />,
+        route: "/account",
+      },
+      {
+        name: "Logout",
+        logo: <LogoutLogoSvg />,
+        route: "/logout",
+      },
+    ],
+  },
+];
+
+const Sidebar: React.FC<SidebarProps> = ({
+  sidebarOpen,
+  setSidebarOpen,
+  variant = "default",
+}) => {
+  const location = useLocation();
+  const { pathname } = location;
+
+  const trigger = useRef<HTMLButtonElement | null>(null);
+  const sidebar = useRef<HTMLDivElement | null>(null);
+
+  const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
+  const [sidebarExpanded, setSidebarExpanded] = useState<boolean>(
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
+  );
+
+  // close on click outside
+  useEffect(() => {
+    const clickHandler = ({ target }: MouseEvent) => {
+      if (!sidebar.current || !trigger.current) return;
+      if (
+        !sidebarOpen ||
+        sidebar.current.contains(target as Node) ||
+        trigger.current.contains(target as Node)
+      )
+        return;
+      setSidebarOpen(false);
+    };
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
+  }, [sidebarOpen, setSidebarOpen]);
+
+  // close if the esc key is pressed
+  useEffect(() => {
+    const keyHandler = ({ keyCode }: KeyboardEvent) => {
+      if (!sidebarOpen || keyCode !== 27) return;
+      setSidebarOpen(false);
+    };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  }, [sidebarOpen, setSidebarOpen]);
+
+  useEffect(() => {
+    localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
+    if (sidebarExpanded) {
+      document.querySelector("body")?.classList.add("sidebar-expanded");
+    } else {
+      document.querySelector("body")?.classList.remove("sidebar-expanded");
+    }
+  }, [sidebarExpanded]);
+
+  return (
+    <div className="min-w-fit">
+      {/* Sidebar backdrop (mobile only) */}
+      <div
+        className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
+          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        aria-hidden="true"
+      ></div>
+
+      {/* Sidebar */}
+      <div
+        id="sidebar"
+        ref={sidebar}
+        className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-64"
+        } ${
+          variant === "v2"
+            ? "border-r border-gray-200 dark:border-gray-700/60"
+            : "rounded-r-2xl shadow-sm"
+        }`}
+      >
+        {/* Sidebar header */}
+        <div className="flex justify-between mb-10 pr-3 sm:px-2">
+          {/* Close button */}
+          <button
+            ref={trigger}
+            className="lg:hidden text-gray-500 hover:text-gray-400"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-controls="sidebar"
+            aria-expanded={sidebarOpen}
+          >
+            <span className="sr-only">Close sidebar</span>
+            <svg
+              className="w-6 h-6 fill-current"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
+            </svg>
+          </button>
+          {/* Logo */}
+          <NavLink end to="/" className="block">
+            <img alt={"icon"} src={FavIcon} width={32} height={32} />
+          </NavLink>
+        </div>
+
+        {/* Links */}
+        <div className="space-y-8">
+          {/* Pages group */}
+          <div>
+            <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
+              <span
+                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+                aria-hidden="true"
+              >
+                •••
+              </span>
+              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                Pages
+              </span>
+            </h3>
+            <ul className="mt-3">
+              {/* Dashboard */}
+              {pages.map((page, key) => {
+                return (
+                  <SidebarLinkGroup
+                    key={key}
+                    activecondition={pathname === page.name}
+                  >
+                    {(handleClick, open) => {
+                      return (
+                        <React.Fragment>
+                          <a
+                            href="#0"
+                            className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+                              pathname === page.name
+                                ? ""
+                                : "hover:text-gray-900 dark:hover:text-white"
+                            }`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleClick();
+                              setSidebarExpanded(true);
+                            }}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center">
+                                {page.logo}
+                                <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                  {page.name}
+                                </span>
+                              </div>
+                              {/* Icon */}
+                              <div className="flex shrink-0 ml-2">
+                                <ArrowUpDownSvg open={open} />
+                              </div>
+                            </div>
+                          </a>
+                          <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            <ul className={`pl-4 mt-1 ${!open && "hidden"}`}>
+                              {page.chilren.map((child, i) => {
+                                return (
+                                  <li
+                                    key={i}
+                                    className="mb-1 last:mb-0 flex items-center space-x-2 justify-start"
+                                  >
+                                    {child.logo}
+                                    <NavLink
+                                      end
+                                      to={child.route}
+                                      className={({ isActive }) =>
+                                        "block transition duration-150 truncate " +
+                                        (isActive
+                                          ? "text-violet-500"
+                                          : "text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200")
+                                      }
+                                    >
+                                      <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                        {child.name}
+                                      </span>
+                                    </NavLink>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
+                        </React.Fragment>
+                      );
+                    }}
+                  </SidebarLinkGroup>
+                );
+              })}
+            </ul>
+          </div>
+          {/* More group */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;
