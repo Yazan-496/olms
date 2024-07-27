@@ -214,9 +214,6 @@ const Sidebar: React.FC<SidebarProps> = ({
               >
                 •••
               </span>
-              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                Pages
-              </span>
             </h3>
             <ul className="mt-3">
               {/* Dashboard */}
@@ -231,7 +228,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         <React.Fragment>
                           <a
                             href="#0"
-                            className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+                            className={`block text-gray-800 text-lg dark:text-gray-100 truncate transition duration-150 ${
                               pathname === page.name
                                 ? ""
                                 : "hover:text-gray-900 dark:hover:text-white"
@@ -245,7 +242,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                             <div className="flex items-center justify-between">
                               <div className="flex items-center">
                                 {page.logo}
-                                <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                <span className="text-lg font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                                   {page.name}
                                 </span>
                               </div>
