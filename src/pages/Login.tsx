@@ -5,8 +5,9 @@ import { LoadingSpinner } from "components/Svgs";
 import API from "utils/API";
 
 const Login: React.FC = () => {
+  const [loading, setLoading] = useState(false); //
+
   const { notify, setUser, user } = useLayout();
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
