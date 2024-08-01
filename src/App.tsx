@@ -4,17 +4,29 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import RedirectToHomeIfAuthenticated from "./utils/RedirectToHomeIfAuthenticated";
 
 import "./css/style.css";
+import "swiper/css";
+
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import "swiper/css/effect-fade";
 
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Logout from "pages/Logout";
 import NotFound from "pages/404";
 import Signup from "pages/Signup";
+import HomePage from "pages/HomePage";
 export const router = [
   {
     path: "/",
-    element: <ProtectedRoute element={<Dashboard />} />,
+    element: <HomePage />,
     title: "Home",
+  },
+  {
+    path: "/dashboard",
+    element: <ProtectedRoute element={<Dashboard />} />,
+    title: "Dashboard",
   },
   {
     path: "/login",
