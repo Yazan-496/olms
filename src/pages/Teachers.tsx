@@ -2,12 +2,7 @@ import UsersTable from "components/Users/Table";
 import { useLayout } from "layout";
 import AuthLayout from "layout/AuthLayout";
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-} from "@material-tailwind/react";
+import { Button, Dialog, DialogBody } from "@material-tailwind/react";
 import API from "utils/API";
 import { useNavigate } from "react-router-dom";
 import { LoadingSpinner } from "components/Svgs";
@@ -103,8 +98,8 @@ const Teachers = () => {
       if (response.code === 200) {
         console.log(response);
         setLoading(false);
-        // setUser(response.data);
-        navigate("/dashboard");
+        setOpen(false);
+        _fetchData();
       } else {
         setLoading(false);
       }
@@ -147,11 +142,10 @@ const Teachers = () => {
         </Button>
       </div>
       <Dialog className="z-[999]" open={open} handler={handleOpen}>
-        <DialogHeader>Add New Teacher</DialogHeader>
         <DialogBody>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="personal_picture"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -186,7 +180,7 @@ const Teachers = () => {
                 </div>
               </div>
               {/* Name Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -206,7 +200,7 @@ const Teachers = () => {
               </div>
 
               {/* Father Name Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="father_name"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -226,7 +220,7 @@ const Teachers = () => {
               </div>
 
               {/* Mother Name Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="mother_name"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -246,7 +240,7 @@ const Teachers = () => {
               </div>
 
               {/* Email Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -264,7 +258,7 @@ const Teachers = () => {
                   required
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="birth_date"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -283,7 +277,7 @@ const Teachers = () => {
                 />
               </div>
               {/* Central Number Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="central_number"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -303,7 +297,7 @@ const Teachers = () => {
               </div>
 
               {/* National Number Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="national_number"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -323,7 +317,7 @@ const Teachers = () => {
               </div>
 
               {/* Password Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -343,7 +337,7 @@ const Teachers = () => {
               </div>
 
               {/* Confirm Password Field */}
-              <div className="mb-4">
+              <div className="mb-1">
                 <label
                   htmlFor="confirmPassword"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"

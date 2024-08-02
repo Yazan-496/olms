@@ -47,7 +47,7 @@ const CourseCard = ({ data }: { data: any }) => {
                       <path fill="#667EEA" d="M2.6 17.667h3.5v-7.334H2.6z" />
                     </g>
                   </svg>
-                  {data.tutor}
+                  {data?.teacher?.name}
                 </span>
               </div>
             </div>

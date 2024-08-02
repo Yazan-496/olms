@@ -375,7 +375,7 @@ export const LogoutLogoSvg = () => {
 export const LoadingSpinner = () => {
   return (
     <svg
-      className="text-gray-200 animate-spin"
+      className="text-gray-500 animate-spin"
       viewBox="0 0 64 64"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

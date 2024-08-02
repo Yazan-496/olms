@@ -17,6 +17,8 @@ import NotFound from "pages/404";
 import Signup from "pages/Signup";
 import HomePage from "pages/HomePage";
 import Teachers from "pages/Teachers";
+import Categories from "pages/Categories";
+import Courses from "pages/Courses";
 export const router = [
   {
     path: "/",
@@ -50,12 +52,12 @@ export const router = [
   },
   {
     path: "/courses",
-    element: <ProtectedRoute />,
+    element: <ProtectedRoute element={<Courses />} />,
     title: "Courses",
   },
   {
     path: "/categories",
-    element: <ProtectedRoute />,
+    element: <ProtectedRoute element={<Categories />} />,
     title: "Categories",
   },
   {
