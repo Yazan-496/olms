@@ -26,7 +26,7 @@ const pages = [
   {
     name: "Users",
     logo: <UsersLogoSvg />,
-    chilren: [
+    children: [
       {
         name: "Users",
         logo: <UsersLogoSvg />,
@@ -40,14 +40,14 @@ const pages = [
       {
         name: "Tutors",
         logo: <TutorssLogoSvg />,
-        route: "/users",
+        route: "/turos",
       },
     ],
   },
   {
     name: "Courses",
     logo: <CoursesLogoSvg />,
-    chilren: [
+    children: [
       {
         name: "Courses",
         logo: <CoursesLogoSvg />,
@@ -63,7 +63,7 @@ const pages = [
   {
     name: "Finance",
     logo: <FinanceLogoSvg />,
-    chilren: [
+    children: [
       {
         name: "Student Financial",
         logo: <FinanceLogoSvg />,
@@ -79,7 +79,7 @@ const pages = [
   {
     name: "Profile",
     logo: <ProfileLogoSvg />,
-    chilren: [
+    children: [
       {
         name: "Personal Informations",
         logo: <ProfileLogoSvg />,
@@ -90,7 +90,7 @@ const pages = [
   {
     name: "Settings",
     logo: <SettingLogoSvg />,
-    chilren: [
+    children: [
       {
         name: "My Account",
         logo: <AccountLogoSvg />,
@@ -200,7 +200,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           {/* Logo */}
           <NavLink
             end
-            to="/"
+            to="/dasshboard"
             className="w-full flex items-center justify-center h-full"
           >
             <img alt={"icon"} src={FavIcon} width={42} height={42} />
@@ -230,8 +230,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {(handleClick, open) => {
                       return (
                         <React.Fragment>
-                          <a
-                            href="#0"
+                          <div
                             className={`block text-gray-800 text-lg dark:text-gray-100 truncate transition duration-150 ${
                               pathname === page.name
                                 ? ""
@@ -255,10 +254,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                                 <ArrowUpDownSvg open={open} />
                               </div>
                             </div>
-                          </a>
+                          </div>
                           <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
                             <ul className={`pl-6 mt-2 ${!open && "hidden"}`}>
-                              {page.chilren.map((child, i) => {
+                              {page.children.map((child, i) => {
                                 return (
                                   <li
                                     key={i}

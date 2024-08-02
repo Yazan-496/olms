@@ -1,8 +1,137 @@
 import { NavLink } from "react-router-dom";
-import Swiper from "components/Swiper";
 import HeaderHome from "components/HeaderHome";
+import SwiperComponent from "components/Swiper";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import CourseCard from "components/CourseCard";
+import { useEffect, useState } from "react";
+import API from "utils/API";
+
+// const categories = [
+//   {
+//     id: 1,
+//     name: "Web Development",
+//     description: "Learn how to build modern web applications.",
+//     courses: [
+//       {
+//         id: 1,
+//         name: "HTML & CSS for Beginners",
+//         description:
+//           "A comprehensive guide to HTML and CSS for those starting their web development journey.",
+//         img: "/images/html.png",
+//         duration: "5 hours",
+//         tutor: "John Doe",
+//       },
+//       {
+//         id: 2,
+//         name: "JavaScript Essentials",
+//         description:
+//           "Master the basics of JavaScript, the most popular programming language for web development.",
+//         img: "/images/js.jpg",
+//         duration: "8 hours",
+//         tutor: "Jane Smith",
+//       },
+//       {
+//         id: 3,
+//         name: "React Basics",
+//         description: "Learn how to build dynamic user interfaces with React.",
+//         img: "/images/react.jpg",
+//         duration: "10 hours",
+//         tutor: "Alice Johnson",
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     name: "Data Science",
+//     description: "Analyzing data to extract insights and drive decisions.",
+//     courses: [
+//       {
+//         id: 1,
+//         name: "Python for Data Science",
+//         description:
+//           "An introduction to Python programming for data analysis and visualization.",
+//         img: "/images/paython.jpg",
+//         duration: "6 hours",
+//         tutor: "Michael Brown",
+//       },
+//       {
+//         id: 2,
+//         name: "Data Analysis with Pandas",
+//         description:
+//           "Learn how to use the Pandas library to perform data analysis in Python.",
+//         img: "/images/panda.png",
+//         duration: "7 hours",
+//         tutor: "Emily Davis",
+//       },
+//       {
+//         id: 3,
+//         name: "Machine Learning Fundamentals",
+//         description:
+//           "Get started with machine learning algorithms and techniques.",
+//         img: "/images/machine.jpg",
+//         duration: "9 hours",
+//         tutor: "Christopher Wilson",
+//       },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     name: "Digital Marketing",
+//     description:
+//       "Master the art of online marketing and social media strategies.",
+//     courses: [
+//       {
+//         id: 1,
+//         name: "SEO Basics",
+//         description:
+//           "Learn the fundamentals of Search Engine Optimization to improve website visibility.",
+//         img: "/images/seo.png",
+//         duration: "4 hours",
+//         tutor: "Olivia Martinez",
+//       },
+//       {
+//         id: 2,
+//         name: "Content Marketing",
+//         description:
+//           "Develop effective content marketing strategies to engage and grow your audience.",
+//         img: "/images/market.jpg",
+//         duration: "6 hours",
+//         tutor: "Liam Rodriguez",
+//       },
+//       {
+//         id: 3,
+//         name: "Social Media Marketing",
+//         description:
+//           "Harness the power of social media to promote your brand and connect with customers.",
+//         img: "/images/social.jpg",
+//         duration: "7 hours",
+//         tutor: "Sophia Garcia",
+//       },
+//     ],
+//   },
+// ];
 
 const HomePage = () => {
+  const [categories, setCategories] = useState([]);
+  const _fetchData = () => {
+    API.get(
+      "/api/home",
+      {},
+      (data) => {
+        setCategories(data?.data?.categoires);
+      },
+      (e) => {}
+    );
+  };
+
+  useEffect(() => {
+    _fetchData();
+  }, []);
+  const speed = 3000;
+  const getAutoplayDelay = (index: number) => {
+    return speed * 3 - index * 3000;
+  };
   return (
     <>
       <main className="w-full">
@@ -11,12 +140,12 @@ const HomePage = () => {
         <HeaderHome />
         {/* end header */}
         {/* start hero */}
-        <div className="bg-gray-100">
+        <div className="bg-[#fafafa]">
           <section
             className="cover  max-h-screen  bg-blue-teal-gradient relative bg-blue-600 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 overflow-hidden py-48 flex
 items-center min-h-screen"
           >
-            <Swiper />
+            <SwiperComponent />
             {/* <div className="h-full absolute top-0 left-0 z-0">
               <img
                 src="images/cover-bg.jpg"
@@ -44,6 +173,7 @@ items-center min-h-screen"
           </section>
         </div>
         {/* end hero */}
+
         {/* start about */}
         <section className="relative px-4 py-16 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 lg:py-32">
           <div className="flex flex-col lg:flex-row lg:-mx-8">
@@ -157,8 +287,46 @@ items-center min-h-screen"
           </div>
         </section>
         {/* end about */}
+        <section className="relative py-10">
+          <div className="w-full gap-y-[50px] flex flex-col items-center justify-center">
+            {categories.length > 0 &&
+              categories?.map((cate: any, key) => {
+                return (
+                  <div className="w-full" key={key}>
+                    <h1 className="text-2xl font-bold text-center">
+                      {cate?.name}
+                    </h1>
+                    <Swiper
+                      className="w-full overflow-hidden"
+                      speed={speed}
+                      modules={[Autoplay]}
+                      autoplay={{
+                        delay: 18000 - (key + 1) * speed,
+                        disableOnInteraction: false,
+                      }}
+                      wrapperClass="w-full"
+                      loop={true}
+                      spaceBetween={50}
+                      slidesPerView={1}
+                    >
+                      {cate?.courses?.map((course: any, i: number) => {
+                        return (
+                          <SwiperSlide
+                            className="!w-full max-w-screen h-full max-h-screen"
+                            key={i}
+                          >
+                            <CourseCard data={course} />
+                          </SwiperSlide>
+                        );
+                      })}
+                    </Swiper>
+                  </div>
+                );
+              })}
+          </div>
+        </section>
         {/* start testimonials */}
-        <section className="relative bg-gray-100 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-16 lg:py-32">
+        <section className="relative bg-[#fafafa] px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-16 lg:py-32">
           <div className="flex flex-col lg:flex-row lg:-mx-8">
             <div className="w-full lg:w-1/2 lg:px-8">
               <h2 className="text-3xl leading-tight font-bold mt-4">
@@ -182,88 +350,6 @@ items-center min-h-screen"
         </section>
         {/* end testimonials */}
         {/* start blog */}
-        <section className="relative bg-white px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-32">
-          <div className="">
-            <h2 className="text-3xl leading-tight font-bold">
-              Learning Insights
-            </h2>
-            <p className="text-gray-600 mt-2 md:max-w-lg">
-              Explore valuable tips and updates to enhance your educational
-              journey and stay informed.
-            </p>
-            <NavLink
-              to="/"
-              title=""
-              className="inline-block text-teal-500 font-semibold mt-6 mt:md-0"
-            >
-              View All Posts
-            </NavLink>
-          </div>
-          <div className="md:flex mt-12 md:-mx-4">
-            <div className="md:px-4 md:w-1/2 xl:w-1/4">
-              <div className="bg-white rounded border border-gray-300">
-                <div className="w-full h-48 overflow-hidden bg-gray-300" />
-                <div className="p-4">
-                  <div className="flex items-center text-sm">
-                    <span className="text-teal-500 font-semibold">
-                      Business
-                    </span>
-                    <span className="ml-4 text-gray-600">29 Nov, 2019</span>
-                  </div>
-                  <p className="text-lg font-semibold leading-tight mt-4">
-                    Card Title
-                  </p>
-                  <p className="text-gray-600 mt-1">
-                    This card has supporting text below as a natural lead-in to
-                    additional content.
-                  </p>
-                  <div className="flex items-center mt-4">
-                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-300" />
-                    <div className="ml-4">
-                      <p className="text-gray-600">
-                        By{" "}
-                        <span className="text-gray-900 font-semibold">
-                          Abby Sims
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="md:px-4 md:w-1/2 xl:w-1/4 mt-4 md:mt-0">
-              <div className="bg-white rounded border border-gray-300 ">
-                <div className="w-full h-48 overflow-hidden bg-gray-300" />
-                <div className="p-4">
-                  <div className="flex items-center text-sm">
-                    <span className="text-teal-500 font-semibold">
-                      Business
-                    </span>
-                    <span className="ml-4 text-gray-600">29 Nov, 2019</span>
-                  </div>
-                  <p className="text-lg font-semibold leading-tight mt-4">
-                    Card Title
-                  </p>
-                  <p className="text-gray-600 mt-1">
-                    This card has supporting text below as a natural lead-in to
-                    additional content.
-                  </p>
-                  <div className="flex items-center mt-4">
-                    <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-300" />
-                    <div className="ml-4">
-                      <p className="text-gray-600">
-                        By{" "}
-                        <span className="text-gray-900 font-semibold">
-                          Abby Sims
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
         {/* end blog */}
         {/* start cta */}
         <section className="relative bg-blue-teal-gradient px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-12 text-center md:text-left">

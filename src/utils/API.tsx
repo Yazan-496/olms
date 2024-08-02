@@ -3,7 +3,10 @@ import { notify } from "./notify";
 
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": "true",
+  },
 });
 
 const request = async (
@@ -18,15 +21,17 @@ const request = async (
     const config: AxiosRequestConfig = {
       url,
       method,
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+        ...headers,
+      },
     };
 
     if (method === "get" || method === "delete") {
       config.params = data;
     } else {
       config.data = data;
-    }
-    if (headers) {
-      config.headers = headers;
     }
     const response: AxiosResponse = await api.request(config);
     return callback(response?.data);

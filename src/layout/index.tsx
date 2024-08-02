@@ -11,6 +11,7 @@ interface LayoutContextProps {
   loadingPage: boolean;
   setLoadingPage: React.Dispatch<React.SetStateAction<boolean>>;
   user: any;
+  _removeUser: () => void;
   setUser: React.Dispatch<React.SetStateAction<any>>;
   notify: ({
     type,
@@ -50,25 +51,37 @@ export const LayoutProvider = ({ children }: { children: ReactNode }) => {
     if (user) {
       localStorage.setItem("USER", JSON.stringify(user));
     } else {
-      localStorage.removeItem("USER");
     }
   }, [user]);
+
+  const _removeUser = () => {
+    localStorage.removeItem("USER");
+  };
   return (
     <LayoutContext.Provider
-      value={{ loadingPage, setLoadingPage, notify, user, setUser }}
+      value={{
+        loadingPage,
+        setLoadingPage,
+        notify,
+        user,
+        setUser,
+        _removeUser,
+      }}
     >
       {children}
       <Toaster
         position="top-center"
         reverseOrder={false}
         gutter={8}
-        containerClassName=""
+        containerClassName="!z-[9999999999999999999999999]"
         containerStyle={{}}
         toastOptions={{
           className: "font-light text-[12px]",
           style: {
+            position: "relative",
             background: "#404040",
             color: "#fafafa",
+            zIndex: 9999, // Ensure this is high enough
           },
         }}
       />

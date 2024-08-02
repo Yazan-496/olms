@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import RedirectToHomeIfAuthenticated from "./utils/RedirectToHomeIfAuthenticated";
 
 import "./css/style.css";
 import "swiper/css";
@@ -17,6 +16,7 @@ import Logout from "pages/Logout";
 import NotFound from "pages/404";
 import Signup from "pages/Signup";
 import HomePage from "pages/HomePage";
+import Teachers from "pages/Teachers";
 export const router = [
   {
     path: "/",
@@ -30,7 +30,7 @@ export const router = [
   },
   {
     path: "/login",
-    element: <RedirectToHomeIfAuthenticated element={<Login />} />,
+    element: <Login />,
     title: "Login",
   },
   {
@@ -44,8 +44,8 @@ export const router = [
     title: "Logout",
   },
   {
-    path: "/users",
-    element: <ProtectedRoute />,
+    path: "/turos",
+    element: <ProtectedRoute element={<Teachers />} />,
     title: "Users",
   },
   {
