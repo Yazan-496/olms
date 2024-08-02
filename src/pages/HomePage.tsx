@@ -163,7 +163,7 @@ items-center min-h-screen"
                   and Comfort are Our Priorities.
                 </p>
                 <NavLink
-                  to="/"
+                  to="/signup"
                   className="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold"
                 >
                   Enroll Now
@@ -237,7 +237,7 @@ items-center min-h-screen"
                   Brightening Your Learning Journey
                 </h4>
                 <p className="mt-1">Discover the Benefits of Our Expertise</p>
-                <NavLink to="/" className="block mt-4">
+                <NavLink to="/signup" className="block mt-4">
                   Read More
                 </NavLink>
               </div>
@@ -251,7 +251,7 @@ items-center min-h-screen"
                 />
                 <h4 className="text-xl font-bold mt-4">Oral Surgery</h4>
                 <p className="mt-1">Let us show you how our experience.</p>
-                <NavLink to="/" className="block mt-4">
+                <NavLink to="/signup" className="block mt-4">
                   Read More
                 </NavLink>
               </div>
@@ -265,7 +265,7 @@ items-center min-h-screen"
                 />
                 <h4 className="text-xl font-bold mt-4">Painless Dentistry</h4>
                 <p className="mt-1">Let us show you how our experience.</p>
-                <NavLink to="/" className="block mt-4">
+                <NavLink to="/signup" className="block mt-4">
                   Read More
                 </NavLink>
               </div>
@@ -279,7 +279,7 @@ items-center min-h-screen"
                 />
                 <h4 className="text-xl font-bold mt-4">Periodontics</h4>
                 <p className="mt-1">Let us show you how our experience.</p>
-                <NavLink to="/" className="block mt-4">
+                <NavLink to="/signup" className="block mt-4">
                   Read More
                 </NavLink>
               </div>
@@ -359,7 +359,7 @@ items-center min-h-screen"
               Call us on: +963 ... ... ...
             </h2>
             <NavLink
-              to="/"
+              to="/signup"
               className="px-8 py-4 bg-white text-blue-600 rounded inline-block font-semibold md:ml-8 mt-4 md:mt-0"
             >
               Schedule Your Session
@@ -380,7 +380,7 @@ items-center min-h-screen"
               <ul className="mt-4">
                 <li className="mt-2">
                   <NavLink
-                    to="/"
+                    to="/signup"
                     title=""
                     className="opacity-75 hover:opacity-100"
                   >
@@ -389,7 +389,7 @@ items-center min-h-screen"
                 </li>
                 <li className="mt-2">
                   <NavLink
-                    to="/"
+                    to="/signup"
                     title=""
                     className="opacity-75 hover:opacity-100"
                   >
@@ -406,7 +406,7 @@ items-center min-h-screen"
               <ul className="mt-4">
                 <li>
                   <NavLink
-                    to="/"
+                    to="/signup"
                     title=""
                     className="block flex items-center opacity-75 hover:opacity-100"
                   >
@@ -426,7 +426,7 @@ items-center min-h-screen"
                 </li>
                 <li className="mt-4">
                   <NavLink
-                    to="/"
+                    to="/signup"
                     title=""
                     className="block flex items-center opacity-75 hover:opacity-100"
                   >
@@ -451,7 +451,7 @@ items-center min-h-screen"
                 </li>
                 <li className="mt-4">
                   <NavLink
-                    to="/"
+                    to="/signup"
                     title=""
                     className="block flex items-center opacity-75 hover:opacity-100"
                   >
@@ -471,7 +471,7 @@ items-center min-h-screen"
                 </li>
                 <li className="mt-4">
                   <NavLink
-                    to="/"
+                    to="/signup"
                     title=""
                     className="block flex items-center opacity-75 hover:opacity-100"
                   >
@@ -497,7 +497,7 @@ items-center min-h-screen"
               </h5>
               <ul className="mt-4 flex">
                 <li>
-                  <NavLink to="/" title="">
+                  <NavLink to="/signup" title="">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={24}
@@ -510,7 +510,7 @@ items-center min-h-screen"
                   </NavLink>
                 </li>
                 <li className="ml-6">
-                  <NavLink to="/" title="">
+                  <NavLink to="/signup" title="">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={24}
@@ -523,7 +523,7 @@ items-center min-h-screen"
                   </NavLink>
                 </li>
                 <li className="ml-6">
-                  <NavLink to="/" title="">
+                  <NavLink to="/signup" title="">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={24}
@@ -537,7 +537,7 @@ items-center min-h-screen"
                   </NavLink>
                 </li>
                 <li className="ml-6">
-                  <NavLink to="/" title="">
+                  <NavLink to="/signup" title="">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={24}
