@@ -29,7 +29,7 @@ const Teachers = () => {
     confirmPassword: "",
   });
   const navigate = useNavigate();
-  const handleUploadImage = async (e: { target: { files: any[] } }) => {
+  const handleUploadImage = async (e: any) => {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
