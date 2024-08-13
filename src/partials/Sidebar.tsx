@@ -38,9 +38,9 @@ const pages = [
         route: "/users",
       },
       {
-        name: "Tutors",
+        name: "Teachers",
         logo: <TutorssLogoSvg />,
-        route: "/turos",
+        route: "/teachers",
       },
     ],
   },
@@ -156,6 +156,13 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
   }, [sidebarExpanded]);
 
+  const _checkActive = (page: any) => {
+    const normalizedPathname = pathname.toLowerCase();
+    return page.children.some((child: any) => {
+      const normalizedRoute = child.route.toLowerCase();
+      return normalizedPathname.startsWith(normalizedRoute);
+    });
+  };
   return (
     <div className="min-w-fit">
       {/* Sidebar backdrop (mobile only) */}
@@ -225,7 +232,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 return (
                   <SidebarLinkGroup
                     key={key}
-                    activecondition={pathname === page.name}
+                    activecondition={_checkActive(page)}
                   >
                     {(handleClick, open) => {
                       return (

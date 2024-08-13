@@ -2,11 +2,13 @@ import { LoadingSpinner } from "components/Svgs";
 import { useLayout } from "layout";
 import AuthLayout from "layout/AuthLayout";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import API from "utils/API";
 
 const Categories = () => {
   const { user } = useLayout();
+  const { course, lesson } = useParams();
+  console.log(course, lesson, "course, lesson");
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const _fetchData = () => {

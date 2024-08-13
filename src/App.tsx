@@ -10,15 +10,15 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import "swiper/css/effect-fade";
 
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
-import Logout from "pages/Logout";
+import Dashboard from "./pages/dashboard";
+import Login from "./pages/login";
+import Logout from "pages/logout";
 import NotFound from "pages/404";
-import Signup from "pages/Signup";
-import HomePage from "pages/HomePage";
-import Teachers from "pages/Teachers";
-import Categories from "pages/Categories";
-import Courses from "pages/Courses";
+import Signup from "pages/signup";
+import HomePage from "pages/home-page";
+import Teachers from "pages/teachers";
+import Categories from "pages/categories";
+import Courses from "pages/courses";
 export const router = [
   {
     path: "/",
@@ -46,7 +46,7 @@ export const router = [
     title: "Logout",
   },
   {
-    path: "/turos",
+    path: "/teachers",
     element: <ProtectedRoute element={<Teachers />} />,
     title: "Users",
   },
@@ -56,7 +56,22 @@ export const router = [
     title: "Courses",
   },
   {
-    path: "/categories",
+    path: "/courses/:lesson",
+    element: <ProtectedRoute element={<Courses />} />,
+    title: "Courses",
+  },
+  {
+    path: "/categories/:course",
+    element: <ProtectedRoute element={<Categories />} />,
+    title: "Categories",
+  },
+  {
+    path: "/categories/:course/:lesson",
+    element: <ProtectedRoute element={<Categories />} />,
+    title: "Categories",
+  },
+  {
+    path: "/categories/",
     element: <ProtectedRoute element={<Categories />} />,
     title: "Categories",
   },
