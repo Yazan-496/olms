@@ -2,7 +2,7 @@ import { Dialog, DialogBody, Button } from "@material-tailwind/react";
 import axios from "axios";
 import { LoadingSpinner } from "components/Svgs";
 import { useLayout } from "layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "utils/API";
 
@@ -20,26 +20,23 @@ const UserModal = ({
   open,
   handleOpen,
 }: UserModalProps) => {
-  console.log(modalData, "modalData");
   const { user, notify } = useLayout();
 
   const [loading, setLoading] = useState(false);
   const [loadingFile, setLoadingFile] = useState(false);
-  const [formData, setFormData] = useState(
-    modalData || {
-      id: null,
-      name: "",
-      father_name: "",
-      mother_name: "",
-      email: "",
-      personal_picture: "",
-      national_number: "",
-      central_number: "",
-      birth_date: "",
-      password: "",
-      confirmPassword: "",
-    }
-  );
+  const [formData, setFormData] = useState({
+    id: null,
+    name: "",
+    father_name: "",
+    mother_name: "",
+    email: "",
+    personal_picture: "",
+    national_number: "",
+    central_number: "",
+    birth_date: "",
+    password: "",
+    confirmPassword: "",
+  });
   const navigate = useNavigate();
   const handleUploadImage = async (e: any) => {
     const selectedFile = e.target.files[0];
@@ -61,7 +58,6 @@ const UserModal = ({
         }
       );
 
-      console.log(response, "response");
       if (response.data?.data?.file_path) {
         setLoadingFile(false);
         setFormData((prevState: any) => ({
@@ -107,7 +103,7 @@ const UserModal = ({
               Authorization: `Bearer ${user?.access_token}`,
             }
           )
-        : API.put(
+        : await API.put(
             `/api/teachers/${formData?.id}`,
             formData,
             (data) => data,
@@ -118,10 +114,11 @@ const UserModal = ({
               Authorization: `Bearer ${user?.access_token}`,
             }
           );
-
+      console.log(response);
       if (response.code === 200) {
         console.log(response);
         setLoading(false);
+        _refresh();
         handleClose();
         _refresh();
       } else {
@@ -137,6 +134,9 @@ const UserModal = ({
       input.click();
     }
   };
+  useEffect(() => {
+    if (modalData?.id) setFormData(modalData);
+  }, [modalData]);
   return (
     <Dialog className="z-[999]" open={open} handler={handleOpen}>
       <DialogBody>

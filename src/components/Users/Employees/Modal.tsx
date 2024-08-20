@@ -20,6 +20,7 @@ const UserModal = ({
   open,
   handleOpen,
 }: UserModalProps) => {
+  console.log(modalData, "modalData");
   const { user, notify } = useLayout();
 
   const [loading, setLoading] = useState(false);
@@ -94,7 +95,7 @@ const UserModal = ({
       setLoading(true);
       const response = !formData?.id
         ? await API.post(
-            "/api/students",
+            "/api/users",
             formData,
             (data) => data,
             (e) => {
@@ -105,7 +106,7 @@ const UserModal = ({
             }
           )
         : await API.put(
-            `/api/students/${formData?.id}`,
+            `/api/users/${formData?.id}`,
             formData,
             (data) => data,
             (e) => {

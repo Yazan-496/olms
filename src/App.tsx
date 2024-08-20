@@ -20,6 +20,7 @@ import Teachers from "pages/teachers";
 import Categories from "pages/categories";
 import Courses from "pages/courses";
 import Students from "pages/students";
+import Employees from "pages/employees";
 export const router = [
   {
     path: "/",
@@ -49,12 +50,17 @@ export const router = [
   {
     path: "/teachers",
     element: <ProtectedRoute element={<Teachers />} />,
-    title: "Users",
+    title: "Teachers",
+  },
+  {
+    path: "/employees",
+    element: <ProtectedRoute element={<Employees />} />,
+    title: "employees",
   },
   {
     path: "/students",
     element: <ProtectedRoute element={<Students />} />,
-    title: "Users",
+    title: "Students",
   },
   {
     path: "/courses",

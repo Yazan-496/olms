@@ -28,9 +28,9 @@ const pages = [
     logo: <UsersLogoSvg />,
     children: [
       {
-        name: "Users",
+        name: "Employees",
         logo: <UsersLogoSvg />,
-        route: "/users",
+        route: "/employees",
       },
       {
         name: "Students",
