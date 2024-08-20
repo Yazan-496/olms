@@ -1,6 +1,14 @@
 import { LoadingSpinner } from "components/Svgs";
 
-export default function UsersTable({ users }: { users: any }) {
+export default function UsersTable({
+  handleOpenEdit,
+  handleDelete,
+  users,
+}: {
+  users: any;
+  handleOpenEdit: (user: any) => void;
+  handleDelete: (user: any) => void;
+}) {
   console.log(users, " users");
   const TABLE_HEAD = ["Member", "Email", "Birthdate", "ID", "Actions"];
 
@@ -58,12 +66,20 @@ export default function UsersTable({ users }: { users: any }) {
                   <td className="px-6 py-4  text-start">
                     {user.national_number}
                   </td>
-                  <td className="text-left px-6 py-4 ">
+                  <td className="text-left flex items-center justify-center gap-2 px-6 py-4 ">
                     <a
+                      onClick={() => handleOpenEdit(user)}
                       href="#"
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       Edit
+                    </a>
+                    <a
+                      onClick={() => handleDelete(user)}
+                      href="#"
+                      className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                    >
+                      Delete
                     </a>
                   </td>
                 </tr>

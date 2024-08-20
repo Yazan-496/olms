@@ -1,12 +1,12 @@
-import UsersTable from "components/Users/Teachers/Table";
+import UsersTable from "components/Users/Students/Table";
 import { useLayout } from "layout";
 import AuthLayout from "layout/AuthLayout";
 import { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
 import API from "utils/API";
-import UserModal from "components/Users/Teachers/Modal";
-import DeleteDialog from "components/Users/Teachers/DeleteDialog";
-const Teachers = () => {
+import UserModal from "components/Users/Students/Modal";
+import DeleteDialog from "components/Users/Students/DeleteDialog";
+const Students = () => {
   const [open, setOpen] = useState<any>();
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [modalData, setModalData] = useState(null);
@@ -40,7 +40,7 @@ const Teachers = () => {
 
   const _fetchData = () => {
     API.get(
-      "/api/teachers",
+      "/api/students",
       {},
       (data) => {
         setUsers(data?.data);
@@ -59,14 +59,14 @@ const Teachers = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Teachers"}>
+    <AuthLayout title={"Students"}>
       <div className="w-full flex justify-end m-4 items-end">
         <Button
           variant="text"
           className="border bg-[#fafafa] shadow-lg"
           onClick={handleOpenAdd}
         >
-          Add New Teacher
+          Add New Student
         </Button>
       </div>
       <UserModal
@@ -91,4 +91,4 @@ const Teachers = () => {
     </AuthLayout>
   );
 };
-export default Teachers;
+export default Students;

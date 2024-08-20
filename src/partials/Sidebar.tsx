@@ -35,7 +35,7 @@ const pages = [
       {
         name: "Students",
         logo: <StudentsLogoSvg />,
-        route: "/users",
+        route: "/students",
       },
       {
         name: "Teachers",

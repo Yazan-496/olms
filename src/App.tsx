@@ -19,6 +19,7 @@ import HomePage from "pages/home-page";
 import Teachers from "pages/teachers";
 import Categories from "pages/categories";
 import Courses from "pages/courses";
+import Students from "pages/students";
 export const router = [
   {
     path: "/",
@@ -48,6 +49,11 @@ export const router = [
   {
     path: "/teachers",
     element: <ProtectedRoute element={<Teachers />} />,
+    title: "Users",
+  },
+  {
+    path: "/students",
+    element: <ProtectedRoute element={<Students />} />,
     title: "Users",
   },
   {
