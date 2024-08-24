@@ -20,7 +20,6 @@ const UserModal = ({
   open,
   handleOpen,
 }: UserModalProps) => {
-  console.log(modalData, "modalData");
   const { user, notify } = useLayout();
 
   const [loading, setLoading] = useState(false);
@@ -135,9 +134,30 @@ const UserModal = ({
       input.click();
     }
   };
+
   useEffect(() => {
-    if (modalData?.id) setFormData(modalData);
-  }, [modalData]);
+    if (modalData?.id) {
+      setFormData(modalData);
+      console.log(modalData, "modalData");
+    } else {
+      setFormData({
+        id: null,
+        name: "",
+        father_name: "",
+        mother_name: "",
+        email: "",
+        personal_picture: "",
+        national_number: "",
+        central_number: "",
+        birth_date: "",
+        password: "",
+        confirmPassword: "",
+      });
+    }
+  }, [modalData, open]);
+  useEffect(() => {
+    console.log(formData, "formData");
+  }, [formData]);
   return (
     <Dialog className="z-[999]" open={open} handler={handleOpen}>
       <DialogBody>

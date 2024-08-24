@@ -135,8 +135,25 @@ const UserModal = ({
     }
   };
   useEffect(() => {
-    if (modalData?.id) setFormData(modalData);
-  }, [modalData]);
+    if (modalData?.id) {
+      setFormData(modalData);
+      console.log(modalData, "modalData");
+    } else {
+      setFormData({
+        id: null,
+        name: "",
+        father_name: "",
+        mother_name: "",
+        email: "",
+        personal_picture: "",
+        national_number: "",
+        central_number: "",
+        birth_date: "",
+        password: "",
+        confirmPassword: "",
+      });
+    }
+  }, [modalData, open]);
   return (
     <Dialog className="z-[999]" open={open} handler={handleOpen}>
       <DialogBody>

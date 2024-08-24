@@ -400,3 +400,35 @@ export const LoadingSpinner = () => {
     </svg>
   );
 };
+interface TriangleSvgProps {
+  color?: string;
+  dir?: "up" | "down" | undefined;
+}
+
+interface TriangleSvgProps {
+  color?: string;
+  dir?: "up" | "down";
+}
+
+export const TriangleSvg = ({
+  color = "green",
+  dir = "up",
+}: TriangleSvgProps) => {
+  return (
+    <svg
+      width="20px"
+      height="20px"
+      viewBox="0 0 20 20"
+      version="1.1"
+      fill={color}
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <rect width={20} height={20} id="icon-bound" fill="none" />
+      <polygon
+        points="10,2 19,14 1,14"
+        transform={dir === "down" ? "rotate(180, 10, 10)" : undefined}
+      />
+    </svg>
+  );
+};

@@ -21,6 +21,9 @@ import Categories from "pages/categories";
 import Courses from "pages/courses";
 import Students from "pages/students";
 import Employees from "pages/employees";
+import Finance from "pages/financial/finance";
+import Transactions from "pages/financial/transactions";
+import Profile from "pages/profile/personal-informations";
 export const router = [
   {
     path: "/",
@@ -88,18 +91,18 @@ export const router = [
     title: "Categories",
   },
   {
-    path: "/finance",
-    element: <ProtectedRoute />,
+    path: "/financials/finance",
+    element: <ProtectedRoute element={<Finance />} />,
     title: "Finance",
   },
   {
-    path: "/trransactions",
-    element: <ProtectedRoute />,
+    path: "/financials/transactions",
+    element: <ProtectedRoute element={<Transactions />} />,
     title: "Transactions",
   },
   {
-    path: "/personal-informations",
-    element: <ProtectedRoute />,
+    path: "/profile/personal-informations",
+    element: <ProtectedRoute element={<Profile />} />,
     title: "Personal Informations",
   },
   {

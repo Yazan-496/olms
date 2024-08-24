@@ -67,12 +67,12 @@ const pages = [
       {
         name: "Student Financial",
         logo: <FinanceLogoSvg />,
-        route: "/finance",
+        route: "/financials/finance",
       },
       {
         name: "Transactions",
         logo: <TransactionsLogoSvg />,
-        route: "/trransactions",
+        route: "/financials/transactions",
       },
     ],
   },
@@ -83,7 +83,7 @@ const pages = [
       {
         name: "Personal Informations",
         logo: <ProfileLogoSvg />,
-        route: "/personal-informations",
+        route: "/profile/personal-informations",
       },
     ],
   },

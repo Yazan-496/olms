@@ -63,9 +63,9 @@ export const LayoutProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("USER");
     setUser(null);
   };
-  if (!readLocaStorage) {
-    return <div>Loading...</div>;
-  }
+  // if (!readLocaStorage) {
+  //   return <div>Loading...</div>;
+  // }
   return (
     <LayoutContext.Provider
       value={{
