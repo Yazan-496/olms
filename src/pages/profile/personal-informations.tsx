@@ -124,65 +124,73 @@ export const UserProfile: React.FC = () => {
 
   return (
     <div className="h-full w-full dark:bg-slate-800 gap-6 flex flex-col items-center justify-center">
-      <div className="px-4 pt-5 sm:px-6">
-        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-          Details and information about the user.
-        </p>
-      </div>
-      <div className="bg-gray-100  flex items-center justify-center  dark:bg-gray-700 relative shadow-xl overflow-hidden hover:shadow-2xl group rounded-xl p-5 transition-all duration-500 transform">
-        <div className="relative w-[150px] h-[150px] group/image  flex items-center justify-center">
-          {loadingFile ? (
-            <div className="w-36 flex items-center justify-center bg-black/20 border border-black/30 h-36 object-center object-cover rounded-full transition-all duration-500 delay-500 transform">
-              Uploading...{" "}
-            </div>
-          ) : (
-            <img
-              src={`${import.meta.env.VITE_BASE_URL}${
-                formData.personal_picture
-              }`}
-              alt="User"
-              className="w-36 h-36 object-center object-cover rounded-full transition-all duration-500 delay-500 transform"
-            />
-          )}
-          {/* Container for the edit button */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover/image:opacity-100 transition-opacity duration-300">
-            <input
-              type="file"
-              onChange={handleUploadImage}
-              className="opacity-0 absolute inset-0"
-            />
-            <button
-              onClick={(e) => e.stopPropagation()}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-              Edit
-            </button>
-          </div>
-        </div>
-        <div className="w-fit transition-all transform duration-500 mt-4">
-          <h1 className="text-gray-600 dark:text-gray-200 font-bold">
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              disabled={true}
-              className="bg-transparent border-none text-gray-600 dark:text-gray-200 font-bold"
-            />
-          </h1>
-          <p className="text-gray-400">
-            <input
-              type="text"
-              name="email"
-              value={formData.email}
-              disabled={true}
-              className="bg-transparent border-none text-gray-400"
-            />
+      <div className="bg-white w-full shadow overflow-hidden sm:rounded-lg mt-6">
+        {" "}
+        <div className="px-4 pt-5 sm:px-6">
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+            Details and information about the user.
           </p>
         </div>
-      </div>
-      <div className="bg-white w-full shadow overflow-hidden sm:rounded-lg mt-6">
+        <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt className="text-sm font-medium flex items-center justify-start text-gray-500">
+            Profile Picture
+          </dt>
+          <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <div className="  flex items-center justify-start dark:bg-gray-700 relative overflow-hidden group rounded-xl p-0 transition-all duration-500 transform">
+              <div className="relative w-[150px] h-[150px] group/image  flex items-center justify-center">
+                {loadingFile ? (
+                  <div className="w-36 flex items-center justify-center bg-black/20 border border-black/30 h-36 object-center object-cover rounded-full transition-all duration-500 delay-500 transform">
+                    Uploading...{" "}
+                  </div>
+                ) : (
+                  <img
+                    src={`${import.meta.env.VITE_BASE_URL}${
+                      formData.personal_picture
+                    }`}
+                    alt="User"
+                    className="w-36 h-36 object-center object-cover rounded-full transition-all duration-500 delay-500 transform"
+                  />
+                )}
+                {/* Container for the edit button */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover/image:opacity-100 transition-opacity duration-300">
+                  <input
+                    type="file"
+                    onChange={handleUploadImage}
+                    className="opacity-0 absolute inset-0"
+                  />
+                  <button
+                    onClick={(e) => e.stopPropagation()}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
+              <div className="w-fit hidden transition-all transform duration-500 mt-4">
+                <h1 className="text-gray-600 dark:text-gray-200 font-bold">
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    disabled={true}
+                    className="bg-transparent border-none text-gray-600 dark:text-gray-200 font-bold"
+                  />
+                </h1>
+                <p className="text-gray-400">
+                  <input
+                    type="text"
+                    name="email"
+                    value={formData.email}
+                    disabled={true}
+                    className="bg-transparent border-none text-gray-400"
+                  />
+                </p>
+              </div>
+            </div>
+          </dd>
+        </div>
         <div className="bg-white w-full shadow overflow-hidden sm:rounded-lg">
-          <div className="border-t border-gray-200">
+          <div className=" border-gray-200">
             <dl>
               {/* Name */}
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
