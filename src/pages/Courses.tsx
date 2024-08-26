@@ -1,3 +1,4 @@
+import CourseCard from "components/Course/CourseCard";
 import { LoadingSpinner } from "components/Svgs";
 import { useLayout } from "layout";
 import AuthLayout from "layout/AuthLayout";
@@ -6,16 +7,21 @@ import API from "utils/API";
 
 const Courses = () => {
   const { user } = useLayout();
-  const [courses, setCourses] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
+  const [myCourses, setMyCourses] = useState([]);
+  const [activeCourses, setActiveCourses] = useState([]);
   const [loading, setLoading] = useState(false);
-  const _fetchData = () => {
+  const [activeTab, setActiveTab] = useState("all");
+
+  const fetchData = (filter: any, setCourses: any) => {
     setLoading(true);
+    const url = `/api/courses${filter ? `?filter=${filter}` : ""}`;
     API.get(
-      "/api/courses",
+      url,
       {},
       (data) => {
         setLoading(false);
-        setCourses(data?.data);
+        setCourses(data?.data || []);
       },
       (e) => {
         setLoading(false);
@@ -24,47 +30,84 @@ const Courses = () => {
         Authorization: `Bearer ${user?.access_token}`,
       }
     );
-    setLoading(false);
   };
+
   useEffect(() => {
-    _fetchData();
+    fetchData("", setAllCourses);
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "all") {
+      fetchData("", setAllCourses);
+    } else if (activeTab === "my-courses") {
+      fetchData("my-courses", setMyCourses);
+    } else if (activeTab === "active-courses") {
+      fetchData("active-courses", setActiveCourses);
+    }
+  }, [activeTab]);
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  const getCoursesToDisplay = () => {
+    switch (activeTab) {
+      case "all":
+        return allCourses;
+      case "my-courses":
+        return myCourses;
+      case "active-courses":
+        return activeCourses;
+      default:
+        return [];
+    }
+  };
+
   return (
-    <AuthLayout title={"Courses"}>
-      {loading && (
-        <span className=" z-10 w-full flex items-center justify-center p-10">
-          <LoadingSpinner />
-        </span>
-      )}
-      <div className="grid grid-cols-3 gap-10">
-        {courses?.map((course: any, i: number) => {
-          return (
-            <div
-              key={i}
-              className="max-w-sm rounded justify-between overflow-hidden shadow-lg"
-            >
-              {course?.photo_path && (
-                <img
-                  className="w-full h-[350px]"
-                  src={`${import.meta.env.VITE_BASE_URL}${course?.photo_path}`}
-                  alt="Sunset in the mountains"
-                />
-              )}
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">{course?.name}</div>
-                <p className="text-gray-700 text-base">{course?.description}</p>
-              </div>
-              <div className="px-6 flex h-max items-end relative bottom-0  justify-between w-full  pt-4 pb-2">
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                  {course?.started_at}
-                </span>
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                  {course?.teacher?.name}
-                </span>
-              </div>
-            </div>
-          );
-        })}
+    <AuthLayout title="Courses">
+      <div className="mb-4 border-b border-gray-200">
+        <div className="flex space-x-4">
+          <button
+            className={`py-2 px-4 font-medium rounded-t-lg ${
+              activeTab === "all"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={() => handleTabChange("all")}
+          >
+            All Courses
+          </button>
+          <button
+            className={`py-2 px-4 font-medium rounded-t-lg ${
+              activeTab === "my-courses"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={() => handleTabChange("my-courses")}
+          >
+            My Courses
+          </button>
+          <button
+            className={`py-2 px-4 font-medium rounded-t-lg ${
+              activeTab === "active-courses"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={() => handleTabChange("active-courses")}
+          >
+            Active Courses
+          </button>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-6">
+        {loading && (
+          <div className="flex items-center justify-center h-40">
+            <LoadingSpinner />
+          </div>
+        )}
+        {getCoursesToDisplay().map((course, i) => (
+          <CourseCard key={i} course={course} />
+        ))}
       </div>
     </AuthLayout>
   );
