@@ -1,4 +1,10 @@
-const CourseCard = ({ course }: { course: any }) => {
+const CourseCard = ({
+  course,
+  _openCourseDetails,
+}: {
+  course: any;
+  _openCourseDetails: (id: any) => void;
+}) => {
   return (
     <div
       key={course?.id}
@@ -30,7 +36,10 @@ const CourseCard = ({ course }: { course: any }) => {
           <button className="bg-black text-white px-4 py-2 rounded-[10px]">
             Register
           </button>
-          <button className="bg-gray-300 text-gray-700 px-4 py-2  rounded-[10px]">
+          <button
+            onClick={() => _openCourseDetails(course?.id)}
+            className="bg-gray-300 text-gray-700 px-4 py-2  rounded-[10px]"
+          >
             Details
           </button>
         </div>

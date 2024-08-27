@@ -7,9 +7,9 @@ import CoursesModal from "components/Courses/Modal";
 import DeleteDialog from "components/Courses/DeleteDialog";
 import CoursesTable from "components/Courses/Table";
 const CoursesManagment = () => {
-  const [open, setOpen] = useState<any>();
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [modalData, setModalData] = useState(null);
+  const [open, setOpen] = useState<any>();
 
   const handleOpenAdd = () => setOpen("add");
   const handleOpenEdit = (user: any) => {

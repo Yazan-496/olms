@@ -1,4 +1,5 @@
 import CourseCard from "components/Course/CourseCard";
+import CourseDetailsModal from "components/Course/CourseDetailsModal";
 import { LoadingSpinner } from "components/Svgs";
 import { useLayout } from "layout";
 import AuthLayout from "layout/AuthLayout";
@@ -6,22 +7,50 @@ import { useEffect, useState } from "react";
 import API from "utils/API";
 
 const Courses = () => {
-  const { user } = useLayout();
+  const { user, notify } = useLayout();
   const [allCourses, setAllCourses] = useState([]);
   const [myCourses, setMyCourses] = useState([]);
   const [activeCourses, setActiveCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
+  const [open, setOpen] = useState<boolean>(false);
+  const [course, setCourse] = useState(null);
+  const _getCourse = async (id: any) => {
+    try {
+      const response = await API.get(
+        `/api/courses/${id}`,
+        {},
+        (data) => data,
+        (e) => {
+          notify(e);
+        },
+        {
+          Authorization: `Bearer ${user?.access_token}`,
+        }
+      );
 
-  const fetchData = (filter: any, setCourses: any) => {
+      if (response.code === 200) {
+        console.log(response);
+        setCourse(response?.data ?? []);
+      } else {
+      }
+    } catch (err) {}
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const _fetchData = () => {
     setLoading(true);
-    const url = `/api/courses${filter ? `?filter=${filter}` : ""}`;
+    const url = `/api/courses`;
     API.get(
       url,
       {},
       (data) => {
         setLoading(false);
-        setCourses(data?.data || []);
+        setAllCourses(data?.data || []);
       },
       (e) => {
         setLoading(false);
@@ -33,16 +62,16 @@ const Courses = () => {
   };
 
   useEffect(() => {
-    fetchData("", setAllCourses);
+    _fetchData();
   }, []);
 
   useEffect(() => {
     if (activeTab === "all") {
-      fetchData("", setAllCourses);
+      _fetchData();
     } else if (activeTab === "my-courses") {
-      fetchData("my-courses", setMyCourses);
+      _fetchData();
     } else if (activeTab === "active-courses") {
-      fetchData("active-courses", setActiveCourses);
+      _fetchData();
     }
   }, [activeTab]);
 
@@ -63,6 +92,10 @@ const Courses = () => {
     }
   };
 
+  const _openCourseDetails = async (id: any) => {
+    await _getCourse(id);
+    handleOpen();
+  };
   return (
     <AuthLayout title="Courses">
       <div className="mb-4 border-b border-gray-200">
@@ -99,6 +132,14 @@ const Courses = () => {
           </button>
         </div>
       </div>
+
+      <CourseDetailsModal
+        data={course}
+        handleClose={handleClose}
+        handleOpen={handleOpen}
+        open={open}
+        _refresh={_fetchData}
+      />
       <div className="grid grid-cols-3 gap-6">
         {loading && (
           <div className="flex items-center justify-center h-40">
@@ -106,7 +147,11 @@ const Courses = () => {
           </div>
         )}
         {getCoursesToDisplay().map((course, i) => (
-          <CourseCard key={i} course={course} />
+          <CourseCard
+            _openCourseDetails={_openCourseDetails}
+            key={i}
+            course={course}
+          />
         ))}
       </div>
     </AuthLayout>
