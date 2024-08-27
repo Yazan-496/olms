@@ -49,6 +49,16 @@ const pages = [
     logo: <CoursesLogoSvg />,
     children: [
       {
+        name: "Courses Managment",
+        logo: <SettingLogoSvg />,
+        route: "/courses-managment",
+      },
+      {
+        name: "Registration",
+        logo: <SettingLogoSvg />,
+        route: "/registration",
+      },
+      {
         name: "Courses",
         logo: <CoursesLogoSvg />,
         route: "/courses",

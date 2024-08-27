@@ -18,12 +18,14 @@ import Signup from "pages/signup";
 import HomePage from "pages/home-page";
 import Teachers from "pages/teachers";
 import Categories from "pages/categories";
-import Courses from "pages/courses";
+import Courses from "pages/courses/courses";
 import Students from "pages/students";
 import Employees from "pages/employees";
 import Finance from "pages/financial/finance";
 import Transactions from "pages/financial/transactions";
 import Profile from "pages/profile/personal-informations";
+import CoursesManagment from "pages/courses/courses-managment";
+import RegistrationManagment from "pages/courses/registration";
 export const router = [
   {
     path: "/",
@@ -69,6 +71,16 @@ export const router = [
     path: "/courses",
     element: <ProtectedRoute element={<Courses />} />,
     title: "Courses",
+  },
+  {
+    path: "/courses-managment",
+    element: <ProtectedRoute element={<CoursesManagment />} />,
+    title: "Courses Managment",
+  },
+  {
+    path: "/registration",
+    element: <ProtectedRoute element={<RegistrationManagment />} />,
+    title: "Registrations",
   },
   {
     path: "/courses/:lesson",
