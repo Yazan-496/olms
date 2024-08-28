@@ -1,21 +1,57 @@
 import { LoadingSpinner } from "components/Svgs";
+import CanCall from "utils/ability";
+
+export interface Lesson {
+  id?: number;
+  course_id?: number;
+  name?: string;
+  description?: string;
+  file?: string;
+  sessions?: Session[];
+}
+
+export interface Session {
+  meet_url?: string;
+  id?: number;
+  lesson_id?: number;
+  type?: null;
+  time?: string;
+  date?: string;
+  duaration?: number;
+  section_id?: number;
+  section?: Section;
+}
+
+export interface Section {
+  id?: number;
+  course_id?: number;
+  name?: string;
+  capacity?: null;
+  days_of_week?: DaysOfWeek[];
+}
+
+export interface DaysOfWeek {
+  duration?: number;
+  time?: string;
+  day?: number;
+}
 
 export default function LessonsTable({
   handleOpenEdit,
   handleDelete,
   lessons,
+  course_id
 }: {
   lessons: any;
   handleOpenEdit: (user: any) => void;
   handleDelete: (user: any) => void;
+  course_id: number
 }) {
   const TABLE_HEAD = [
     "ID",
-    "Member",
-    "Email",
-    "Balance",
-    "Total Deposits",
-    "Total Withdrawals",
+    "Name",
+    "Description",
+    "Actions"
   ];
 
   return (
@@ -48,39 +84,40 @@ export default function LessonsTable({
           </thead>
           {lessons?.length > 0 ? (
             <tbody className="w-full">
-              {lessons?.map((transaction: any, index: number) => (
+              {lessons?.map((lesson: Lesson, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
-                    index % 2 === 0 ? "" : "bg-gray-50"
-                  }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
+                    }`}
                 >
-                  <td className="px-6 py-4  text-start">
-                    {transaction?.user.national_number}
-                  </td>
-                  <td className="px-6 py-4 font-medium  text-gray-900 whitespace-nowrap dark:text-white flex items-center space-x-2">
-                    {transaction?.user?.personal_picture && (
-                      <img
-                        src={`${import.meta.env.VITE_BASE_URL}${
-                          transaction?.user?.personal_picture
-                        }`}
-                        alt={transaction.user?.name}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
-                    )}
-                    <span>{transaction.user?.name}</span>
+                  <td className="px-6 py-4 text-start">
+                    <span>{lesson?.id}</span>
                   </td>
                   <td className="px-6 py-4 text-start">
-                    {transaction.user?.email}
+                    <span>{lesson?.name}</span>
                   </td>
                   <td className="px-6 py-4 text-start">
-                    {transaction.total_balance}
+                    {lesson?.description}
                   </td>
-                  <td className="px-6 py-4 text-start">
-                    {transaction.deposit_Total}
-                  </td>
-                  <td className="px-6 py-4 text-start">
-                    {transaction.withdrawal_Total}
+                  <td className="text-left flex items-start justify-start gap-2 px-2 py-2 ">
+                    <CanCall permission="UPDATE_COURSE">
+                      <a
+                        onClick={() => handleOpenEdit(lesson)}
+                        href="#"
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        Edit
+                      </a>
+                    </CanCall>
+                    <CanCall permission="DELETE_COURSE">
+                      <a
+                        onClick={() => handleDelete(lesson)}
+                        href="#"
+                        className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                      >
+                        Delete
+                      </a>
+                    </CanCall>
                   </td>
                 </tr>
               ))}
