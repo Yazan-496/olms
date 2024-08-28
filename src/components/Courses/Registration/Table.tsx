@@ -1,4 +1,5 @@
 import { LoadingSpinner } from "components/Svgs";
+import CanCall from "utils/ability";
 
 export default function RegistrationTable({
   handleOpenEdit,
@@ -45,9 +46,8 @@ export default function RegistrationTable({
               {registration.map((register: any, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
-                    index % 2 === 0 ? "" : "bg-gray-50"
-                  }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
+                    }`}
                 >
                   <td className="px-2 py-2 text-start">{register?.id}</td>
 
@@ -65,20 +65,24 @@ export default function RegistrationTable({
                     {register?.started_at}
                   </td>
                   <td className="text-left flex items-center justify-center gap-2 px-2 py-2 ">
-                    <a
-                      onClick={() => handleOpenEdit(register)}
-                      href="#"
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit
-                    </a>
-                    <a
-                      onClick={() => handleDelete(register)}
-                      href="#"
-                      className="font-medium text-red-600 dark:text-red-500 hover:underline"
-                    >
-                      Delete
-                    </a>
+                    <CanCall permission="UPDATE_REGISTERATION">
+                      <a
+                        onClick={() => handleOpenEdit(register)}
+                        href="#"
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        Edit
+                      </a>
+                    </CanCall>
+                    <CanCall permission="DELETE_REGISTERATION">
+                      <a
+                        onClick={() => handleDelete(register)}
+                        href="#"
+                        className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                      >
+                        Delete
+                      </a>
+                    </CanCall>
                   </td>
                 </tr>
               ))}

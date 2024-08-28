@@ -6,6 +6,7 @@ import { Button } from "@material-tailwind/react";
 import API from "utils/API";
 import UserModal from "components/Users/Employees/Modal";
 import DeleteDialog from "components/Users/Employees/DeleteDialog";
+import CanCall from "utils/ability";
 const Employees = () => {
   const [open, setOpen] = useState<any>();
   const [openDelete, setOpenDelete] = useState<boolean>(false);
@@ -46,7 +47,7 @@ const Employees = () => {
       (data) => {
         setUsers(data?.data);
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -61,15 +62,17 @@ const Employees = () => {
 
   return (
     <AuthLayout title={"Employees"}>
-      <div className="w-full flex justify-end m-4 items-end">
-        <Button
-          variant="text"
-          className="border bg-[#fafafa] shadow-lg"
-          onClick={handleOpenAdd}
-        >
-          Add New Employee
-        </Button>
-      </div>
+      <CanCall permission="CREATE_EMPLOYEE">
+        <div className="w-full flex justify-end m-4 items-end">
+          <Button
+            variant="text"
+            className="border bg-[#fafafa] shadow-lg"
+            onClick={handleOpenAdd}
+          >
+            Add New Employee
+          </Button>
+        </div>
+      </CanCall>
       <UserModal
         handleClose={handleClose}
         handleOpen={handleOpen}

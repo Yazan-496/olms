@@ -6,6 +6,7 @@ import API from "utils/API";
 import RegistrationModal from "components/Courses/Registration/Modal";
 import DeleteDialog from "components/Courses/Registration/DeleteDialog";
 import RegistrationTable from "components/Courses/Registration/Table";
+import CanCall from "utils/ability";
 const RegistrationManagment = () => {
   const [open, setOpen] = useState<any>();
   const [openDelete, setOpenDelete] = useState<boolean>(false);
@@ -46,7 +47,7 @@ const RegistrationManagment = () => {
       (data) => {
         setUsers(data?.data);
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -61,15 +62,17 @@ const RegistrationManagment = () => {
 
   return (
     <AuthLayout title={"Registration Managment"}>
-      <div className="w-full flex justify-end m-4 items-end">
-        <Button
-          variant="text"
-          className="border bg-[#fafafa] shadow-lg"
-          onClick={handleOpenAdd}
-        >
-          Add New Registration
-        </Button>
-      </div>
+      <CanCall permission="CREATE_REGISTERATION">
+        <div className="w-full flex justify-end m-4 items-end">
+          <Button
+            variant="text"
+            className="border bg-[#fafafa] shadow-lg"
+            onClick={handleOpenAdd}
+          >
+            Add New Registration
+          </Button>
+        </div>
+      </CanCall>
       <RegistrationModal
         handleClose={handleClose}
         handleOpen={handleOpen}
