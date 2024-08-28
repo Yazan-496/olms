@@ -60,7 +60,7 @@ const RegistrationManagment = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Courses/Registration Managment"}>
+    <AuthLayout title={"Registration Managment"}>
       <div className="w-full flex justify-end m-4 items-end">
         <Button
           variant="text"

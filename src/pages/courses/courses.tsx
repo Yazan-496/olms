@@ -14,7 +14,7 @@ const Courses = () => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const [open, setOpen] = useState<boolean>(false);
-  const [course, setCourse] = useState(null);
+  const [course, setCourse] = useState([]);
   const _getCourse = async (id: any) => {
     try {
       const response = await API.get(
@@ -69,9 +69,17 @@ const Courses = () => {
     if (activeTab === "all") {
       _fetchData();
     } else if (activeTab === "my-courses") {
-      _fetchData();
+      if (allCourses && allCourses?.length > 0) {
+        setMyCourses(
+          allCourses.filter((course: any) => !!course?.is_available)
+        );
+      }
     } else if (activeTab === "active-courses") {
-      _fetchData();
+      if (allCourses && allCourses?.length > 0) {
+        setActiveCourses(
+          allCourses.filter((course: any) => !!course?.is_available)
+        );
+      }
     }
   }, [activeTab]);
 
