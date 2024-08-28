@@ -7,6 +7,7 @@ import CoursesModal from "components/Courses/Modal";
 import DeleteDialog from "components/Courses/DeleteDialog";
 import CoursesTable from "components/Courses/Table";
 import LessonsOfCourse from "components/Courses/LessonsModal";
+import CanCall from "utils/ability";
 const CoursesManagment = () => {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [modalData, setModalData] = useState(null);
@@ -28,7 +29,7 @@ const CoursesManagment = () => {
           setLessonsOfCourse(data?.data);
           setOpenLessons(true);
         },
-        (e) => {},
+        (e) => { },
         {
           Authorization: `Bearer ${user?.access_token}`,
         }
@@ -69,7 +70,7 @@ const CoursesManagment = () => {
       (data) => {
         setUsers(data?.data);
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -84,15 +85,17 @@ const CoursesManagment = () => {
 
   return (
     <AuthLayout title={"Courses Managment"}>
-      <div className="w-full flex justify-end m-4 items-end">
-        <Button
-          variant="text"
-          className="border bg-[#fafafa] shadow-lg"
-          onClick={handleOpenAdd}
-        >
-          Add New Course
-        </Button>
-      </div>
+      <CanCall permission="CREATE_COURSE">
+        <div className="w-full flex justify-end m-4 items-end">
+          <Button
+            variant="text"
+            className="border bg-[#fafafa] shadow-lg"
+            onClick={handleOpenAdd}
+          >
+            Add New Course
+          </Button>
+        </div>
+      </CanCall>
       <CoursesModal
         handleClose={handleClose}
         handleOpen={handleOpen}
