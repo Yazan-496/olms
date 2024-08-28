@@ -1,14 +1,16 @@
 const CourseCard = ({
   course,
   _openCourseDetails,
+  waitDetails
 }: {
   course: any;
   _openCourseDetails: (id: any) => void;
+  waitDetails: any
 }) => {
   return (
     <div
       key={course?.id}
-      className="relative max-w-sm grid grid-rows-[55%_55%_10] rounded overflow-hidden shadow-lg group"
+      className="relative grid grid-rows-[55%_55%_10] rounded overflow-hidden shadow-lg group"
     >
       {course?.photo_path && (
         <img
@@ -33,14 +35,11 @@ const CourseCard = ({
       {/* Hover Effect */}
       <div className="absolute inset-x-0 bottom-0 h-0 group-hover:h-[90%] bg-black bg-opacity-50 rounded-t-3xl transition-all duration-300 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 visibility-hidden group-hover:visibility-visible">
         <div className="flex gap-4">
-          <button className="bg-black text-white px-4 py-2 rounded-[10px]">
-            Register
-          </button>
           <button
             onClick={() => _openCourseDetails(course?.id)}
             className="bg-gray-300 text-gray-700 px-4 py-2  rounded-[10px]"
           >
-            Details
+            Details {waitDetails === course?.id ? "..." : ""}
           </button>
         </div>
       </div>
