@@ -23,7 +23,12 @@ interface CourseModalProps {
 }
 interface Section {
   name: string;
-  days_of_week: number[];
+  days_of_week: Day[];
+}
+interface Day {
+  day: number;
+  duration: number;
+  time: string;
 }
 interface FormData {
   id: any;
@@ -60,21 +65,32 @@ const CoursesModal = ({
     user_teacher_id: "",
     started_at: "",
     lessons_count: 0,
-    sections: [{ name: "", days_of_week: [] }],
+    sections: [{ name: "", days_of_week: [{ duration: 0, time: "", day: 0 }] }],
   });
-
+  const getDayNameById = (id: number): string | undefined => {
+    const day = days.find((day) => day.id === id);
+    return day ? day.name : undefined;
+  };
   const handleSelectDays = (sectionIndex: number, dayId: number) => {
     setFormData((prevState) => {
       const updatedSections = [...prevState.sections];
       const section = updatedSections[sectionIndex];
 
-      const updatedDays = section.days_of_week.includes(dayId)
-        ? section.days_of_week.filter((id) => id !== dayId)
-        : [...section.days_of_week, dayId];
+      const dayIndex = section.days_of_week.findIndex(
+        (day) => day.day === dayId
+      );
+
+      if (dayIndex !== -1) {
+        section.days_of_week = section.days_of_week.filter(
+          (day) => day.day !== dayId
+        );
+      } else {
+        section.days_of_week.push({ day: dayId, duration: 0, time: "" });
+      }
 
       updatedSections[sectionIndex] = {
         ...section,
-        days_of_week: updatedDays,
+        days_of_week: section.days_of_week,
       };
 
       return {
@@ -110,7 +126,37 @@ const CoursesModal = ({
       };
     });
   };
+  const handleDayDetailsChange = (
+    sectionIndex: number,
+    dayId: number,
+    field: string,
+    value: any
+  ) => {
+    setFormData((prevState) => {
+      const updatedSections = [...prevState.sections];
+      const section = updatedSections[sectionIndex];
+      const dayIndex = section.days_of_week.findIndex(
+        (day) => day.day === dayId
+      );
 
+      if (dayIndex !== -1) {
+        section.days_of_week[dayIndex] = {
+          ...section.days_of_week[dayIndex],
+          [field]: value,
+        };
+      }
+
+      updatedSections[sectionIndex] = {
+        ...section,
+        days_of_week: section.days_of_week,
+      };
+
+      return {
+        ...prevState,
+        sections: updatedSections,
+      };
+    });
+  };
   const _getCategories = async () => {
     try {
       const response = await API.get(
@@ -264,7 +310,18 @@ const CoursesModal = ({
         user_teacher_id: "",
         started_at: "",
         lessons_count: 0,
-        sections: [{ name: "", days_of_week: [] }],
+        sections: [
+          {
+            name: "",
+            days_of_week: [
+              {
+                duration: 0,
+                time: "",
+                day: 0,
+              },
+            ],
+          },
+        ],
       });
     }
   }, [modalData, open]);
@@ -488,7 +545,9 @@ const CoursesModal = ({
                           padding: "10px",
                           margin: "5px",
                           cursor: "pointer",
-                          backgroundColor: section.days_of_week.includes(day.id)
+                          backgroundColor: section.days_of_week.some(
+                            (d) => d.day === day.id
+                          )
                             ? "lightblue"
                             : "lightgray",
                         }}
@@ -497,6 +556,44 @@ const CoursesModal = ({
                       </div>
                     ))}
                   </div>
+
+                  {section.days_of_week.map((day) => (
+                    <div key={day.day} className="mt-2 pb-1 border-b">
+                      <div className="font-bold">
+                        {getDayNameById(day?.day)}:
+                      </div>
+                      <label>Duration</label>
+                      <input
+                        type="number"
+                        value={day.duration}
+                        onChange={(e) =>
+                          handleDayDetailsChange(
+                            index,
+                            day.day,
+                            "duration",
+                            Number(e.target.value)
+                          )
+                        }
+                        className="ml-2 p-1 border border-gray-300 rounded"
+                        placeholder="Duration In Minutes"
+                      />
+                      <label className="ml-4">Time:</label>
+                      <input
+                        type="time"
+                        value={day.time}
+                        onChange={(e) =>
+                          handleDayDetailsChange(
+                            index,
+                            day.day,
+                            "time",
+                            e.target.value
+                          )
+                        }
+                        className="ml-2 p-1 border border-gray-300 rounded"
+                        placeholder="Time"
+                      />
+                    </div>
+                  ))}
 
                   {formData.sections.length > 1 && (
                     <div

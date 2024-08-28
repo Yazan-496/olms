@@ -26,6 +26,7 @@ import Transactions from "pages/financial/transactions";
 import Profile from "pages/profile/personal-informations";
 import CoursesManagment from "pages/courses/courses-managment";
 import RegistrationManagment from "pages/courses/registration";
+import Lessons from "pages/lessons/index.tsx";
 export const router = [
   {
     path: "/",
@@ -86,6 +87,11 @@ export const router = [
     path: "/courses/:lesson",
     element: <ProtectedRoute element={<Courses />} />,
     title: "Courses",
+  },
+  {
+    path: "/lessons/:id",
+    element: <ProtectedRoute element={<Lessons />} />,
+    title: "Lessons",
   },
   {
     path: "/categories/:course",

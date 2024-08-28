@@ -1,4 +1,5 @@
 import { LoadingSpinner } from "components/Svgs";
+import { NavLink } from "react-router-dom";
 
 export default function CoursesTable({
   handleOpenEdit,
@@ -90,13 +91,13 @@ export default function CoursesTable({
                     {course?.started_at}
                   </td>
                   <td className="min-w-[100px] px-2 py-2  text-start">
-                    <a
-                      onClick={() => handleOpenLessons(course)}
-                      href="#"
+                    <NavLink
+                      // onClick={() => handleOpenLessons(course)}
+                      to={`/lessons/${course?.id}`}
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       Show Lessons
-                    </a>
+                    </NavLink>
                   </td>
                   <td className="text-left flex items-center justify-center gap-2 px-2 py-2 ">
                     <a
