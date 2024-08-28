@@ -121,7 +121,7 @@ const HomePage = () => {
       (data) => {
         setCategories(data?.data?.categoires);
       },
-      (e) => {}
+      (e) => { }
     );
   };
 
@@ -338,7 +338,7 @@ items-center min-h-screen"
                 dedicated to helping you succeed with ease and confidence.
               </p>
             </div>
-            <div className="w-full md:max-w-md md:mx-auto lg:w-1/2 lg:px-8 mt-12 mt:md-0">
+            <div className="w-full -w-mmd:maxd md:mx-auto lg:w-1/2 lg:px-8 mt-12 mt:md-0">
               <div className="bg-gray-400 w-full h-64 rounded-lg">
                 <img src="/images/empower-you.png" />
               </div>

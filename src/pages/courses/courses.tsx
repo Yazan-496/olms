@@ -34,7 +34,7 @@ const Courses = () => {
         setCourse(response?.data ?? []);
       } else {
       }
-    } catch (err) {}
+    } catch (err) { }
   };
   const handleOpen = () => {
     setOpen(true);
@@ -99,9 +99,11 @@ const Courses = () => {
         return [];
     }
   };
-
+  const [waitDetails, setWaitDetails] = useState(null)
   const _openCourseDetails = async (id: any) => {
+    setWaitDetails(id)
     await _getCourse(id);
+    setWaitDetails(null)
     handleOpen();
   };
   return (
@@ -109,31 +111,28 @@ const Courses = () => {
       <div className="mb-4 border-b border-gray-200">
         <div className="flex space-x-4">
           <button
-            className={`py-2 px-4 font-medium rounded-t-lg ${
-              activeTab === "all"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={`py-2 px-4 font-medium rounded-t-lg ${activeTab === "all"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("all")}
           >
             All Courses
           </button>
           <button
-            className={`py-2 px-4 font-medium rounded-t-lg ${
-              activeTab === "my-courses"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={`py-2 px-4 font-medium rounded-t-lg ${activeTab === "my-courses"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("my-courses")}
           >
             My Courses
           </button>
           <button
-            className={`py-2 px-4 font-medium rounded-t-lg ${
-              activeTab === "active-courses"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={`py-2 px-4 font-medium rounded-t-lg ${activeTab === "active-courses"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("active-courses")}
           >
             Active Courses
@@ -159,6 +158,7 @@ const Courses = () => {
             _openCourseDetails={_openCourseDetails}
             key={i}
             course={course}
+            waitDetails={waitDetails}
           />
         ))}
       </div>
