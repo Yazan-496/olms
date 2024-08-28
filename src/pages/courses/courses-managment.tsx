@@ -6,15 +6,38 @@ import API from "utils/API";
 import CoursesModal from "components/Courses/Modal";
 import DeleteDialog from "components/Courses/DeleteDialog";
 import CoursesTable from "components/Courses/Table";
+import LessonsOfCourse from "components/Courses/LessonsModal";
 const CoursesManagment = () => {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [modalData, setModalData] = useState(null);
+  const [lessonsOfCourse, setLessonsOfCourse] = useState([]);
+  const [openLessons, setOpenLessons] = useState<boolean>(false);
   const [open, setOpen] = useState<any>();
 
   const handleOpenAdd = () => setOpen("add");
-  const handleOpenEdit = (user: any) => {
-    setModalData(user);
+  const handleOpenEdit = (course: any) => {
+    setModalData(course);
     setOpen("edit");
+  };
+  const handleOpenLessons = (course: any) => {
+    if (course?.id) {
+      API.get(
+        `api/lessons/lessons_of_course/${course?.id}`,
+        {},
+        (data) => {
+          setLessonsOfCourse(data?.data);
+          setOpenLessons(true);
+        },
+        (e) => {},
+        {
+          Authorization: `Bearer ${user?.access_token}`,
+        }
+      );
+    }
+  };
+  const handleCloseLessons = () => {
+    setOpenLessons(false);
+    setLessonsOfCourse([]);
   };
   const handleClose = () => {
     setOpen("");
@@ -77,6 +100,13 @@ const CoursesManagment = () => {
         modalData={modalData}
         _refresh={_fetchData}
       />
+      <LessonsOfCourse
+        handleClose={handleCloseLessons}
+        handleOpen={handleOpenLessons}
+        open={openLessons}
+        modalData={lessonsOfCourse}
+        _refresh={_fetchData}
+      />
       <DeleteDialog
         handleClose={handleCloseDelete}
         handleOpen={() => setOpenDelete(false)}
@@ -87,6 +117,7 @@ const CoursesManagment = () => {
       <CoursesTable
         handleDelete={handleOpenDelete}
         handleOpenEdit={handleOpenEdit}
+        handleOpenLessons={handleOpenLessons}
         courses={courses}
       />
     </AuthLayout>

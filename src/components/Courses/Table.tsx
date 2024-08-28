@@ -2,11 +2,13 @@ import { LoadingSpinner } from "components/Svgs";
 
 export default function CoursesTable({
   handleOpenEdit,
+  handleOpenLessons,
   handleDelete,
   courses,
 }: {
   courses: any;
   handleOpenEdit: (course: any) => void;
+  handleOpenLessons: (course: any) => void;
   handleDelete: (course: any) => void;
 }) {
   console.log(courses, " courses");
@@ -18,6 +20,7 @@ export default function CoursesTable({
     "Price",
     "Teacher",
     "Started At",
+    "Lessons",
     "Actions",
   ];
 
@@ -85,6 +88,15 @@ export default function CoursesTable({
                   </td>
                   <td className="min-w-[100px] px-2 py-2  text-start">
                     {course?.started_at}
+                  </td>
+                  <td className="min-w-[100px] px-2 py-2  text-start">
+                    <a
+                      onClick={() => handleOpenLessons(course)}
+                      href="#"
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Show Lessons
+                    </a>
                   </td>
                   <td className="text-left flex items-center justify-center gap-2 px-2 py-2 ">
                     <a

@@ -387,24 +387,26 @@ const CoursesModal = ({
                 required
               />
             </div>
-            <div className="mb-1">
-              <label
-                htmlFor="lessons_count"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-              >
-                Lessons Count
-              </label>
-              <input
-                type="number"
-                id="lessons_count"
-                name="lessons_count"
-                className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Lessons Count"
-                value={formData.lessons_count}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            {!modalData?.id && (
+              <div className="mb-1">
+                <label
+                  htmlFor="lessons_count"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                >
+                  Lessons Count
+                </label>
+                <input
+                  type="number"
+                  id="lessons_count"
+                  name="lessons_count"
+                  className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="Lessons Count"
+                  value={formData.lessons_count}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
             <div className="mb-1">
               <label
                 htmlFor="user_teacher_id"
@@ -458,61 +460,63 @@ const CoursesModal = ({
               </select>
             </div>
           </div>
-          <div className="flex flex-wrap gap-1">
-            {formData.sections.map((section, index) => (
-              <div
-                key={index}
-                className="mb-4 p-2 border border-gray-300 rounded"
-              >
-                <input
-                  type="text"
-                  name="name"
-                  value={section.name}
-                  onChange={(e) =>
-                    handleSectionNameChange(index, e.target.value)
-                  }
-                  placeholder={`Section ${index + 1} Name`}
-                  className="mb-2 p-1 border border-gray-300 rounded w-full"
-                />
+          {!modalData?.id && open && (
+            <div className="flex flex-wrap gap-1">
+              {formData.sections.map((section, index) => (
+                <div
+                  key={index}
+                  className="mb-4 p-2 border border-gray-300 rounded"
+                >
+                  <input
+                    type="text"
+                    name="name"
+                    value={section.name}
+                    onChange={(e) =>
+                      handleSectionNameChange(index, e.target.value)
+                    }
+                    placeholder={`Section ${index + 1} Name`}
+                    className="mb-2 p-1 border border-gray-300 rounded w-full"
+                  />
 
-                <div className="flex flex-wrap gap-1">
-                  {days.map((day) => (
-                    <div
-                      key={day.id}
-                      onClick={() => handleSelectDays(index, day.id)}
-                      className="rounded-[10px] w-fit"
-                      style={{
-                        padding: "10px",
-                        margin: "5px",
-                        cursor: "pointer",
-                        backgroundColor: section.days_of_week.includes(day.id)
-                          ? "lightblue"
-                          : "lightgray",
-                      }}
-                    >
-                      {day.name}
-                    </div>
-                  ))}
-                </div>
-
-                {formData.sections.length > 1 && (
-                  <div
-                    onClick={() => handleRemoveSection(index)}
-                    className="w-fit cursor-pointer mt-2 bg-red-500 text-white py-1 px-2 rounded"
-                  >
-                    Remove Section
+                  <div className="flex flex-wrap gap-1">
+                    {days.map((day) => (
+                      <div
+                        key={day.id}
+                        onClick={() => handleSelectDays(index, day.id)}
+                        className="rounded-[10px] w-fit"
+                        style={{
+                          padding: "10px",
+                          margin: "5px",
+                          cursor: "pointer",
+                          backgroundColor: section.days_of_week.includes(day.id)
+                            ? "lightblue"
+                            : "lightgray",
+                        }}
+                      >
+                        {day.name}
+                      </div>
+                    ))}
                   </div>
-                )}
-              </div>
-            ))}
 
-            <div
-              onClick={handleAddSection}
-              className="w-fit cursor-pointer bg-green-500 text-white py-2 px-4 rounded"
-            >
-              Add New Section
+                  {formData.sections.length > 1 && (
+                    <div
+                      onClick={() => handleRemoveSection(index)}
+                      className="w-fit cursor-pointer mt-2 bg-red-500 text-white py-1 px-2 rounded"
+                    >
+                      Remove Section
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <div
+                onClick={handleAddSection}
+                className="w-fit cursor-pointer bg-green-500 text-white py-2 px-4 rounded"
+              >
+                Add New Section
+              </div>
             </div>
-          </div>
+          )}
           {/* Buttons */}
           <div className="flex justify-between mt-6">
             <Button
