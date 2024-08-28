@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "tailwindcss";
-import path from "path";
 
 export default defineConfig({
   define: {
@@ -18,7 +17,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
-      "@tailwindConfig": path.resolve(__dirname, "tailwind.config.js"),
+      // "@tailwindConfig": path.resolve(__dirname, "tailwind.config.js"),
     },
   },
 });

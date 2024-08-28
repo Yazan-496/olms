@@ -3,6 +3,7 @@ import { LoadingSpinner } from "components/Svgs";
 import { useLayout } from "layout";
 import { useEffect, useState } from "react";
 import API from "utils/API";
+import { toISO8601WithoutSeconds } from "utils/Utils";
 
 interface RegistrationModalProps {
   handleClose: () => void;
@@ -139,9 +140,16 @@ const RegistrationModal = ({
 
   useEffect(() => {
     if (modalData?.id) {
+      console.log(
+        modalData.started_at,
+        toISO8601WithoutSeconds(modalData.end_at),
+        "sjhgshag"
+      );
       setFormData((prevState: any) => ({
         ...prevState,
         id: modalData?.id,
+        started_at: toISO8601WithoutSeconds(modalData.started_at),
+        end_at: toISO8601WithoutSeconds(modalData.end_at),
         courses: modalData.courses.map((course: any) => course.id),
       }));
       console.log(modalData, "modalData");
@@ -154,32 +162,12 @@ const RegistrationModal = ({
       });
     }
   }, [modalData, open]);
-  useEffect(() => {
-    console.log(formData, "formData");
-  }, [formData]);
+  useEffect(() => {}, [formData]);
   return (
     <Dialog className="z-[999]" open={open} handler={handleOpen}>
       <DialogBody>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="mb-1">
-            <div className="mb-1">
-              <label
-                htmlFor="end_at"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-              >
-                Ended Date
-              </label>
-              <input
-                type="date"
-                id="end_at"
-                name="end_at"
-                className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="10-09-1998"
-                value={formData.end_at}
-                onChange={handleChange}
-                required
-              />
-            </div>
             <div className="mb-1">
               <label
                 htmlFor="started_at"
@@ -188,12 +176,30 @@ const RegistrationModal = ({
                 Started Date
               </label>
               <input
-                type="date"
+                type="datetime-local"
                 id="started_at"
                 name="started_at"
                 className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 placeholder="10-09-1998"
                 value={formData.started_at}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-1">
+              <label
+                htmlFor="end_at"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              >
+                Ended Date
+              </label>
+              <input
+                type="datetime-local"
+                id="end_at"
+                name="end_at"
+                className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="10-09-1998"
+                value={formData.end_at}
                 onChange={handleChange}
                 required
               />
