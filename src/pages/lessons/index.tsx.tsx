@@ -3,45 +3,57 @@ import AuthLayout from "layout/AuthLayout";
 import { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
 import API from "utils/API";
-import LessonsModal from "components/Courses/Lessons/Modal";
-import LessonsTable from "components/Courses/Lessons/Table";
-import { useParams } from "react-router-dom";
+import LessonsModal, { Course } from "components/Courses/Lessons/Modal";
+import LessonsTable, { Lesson } from "components/Courses/Lessons/Table";
+import { useSearchParams } from "react-router-dom";
+import EditLessonsModal from "components/Courses/Lessons/editModal";
 
 const Lessons = () => {
-  const { id } = useParams();
-  console.log(id);
+  const [params] = useSearchParams();
+  const id = params.get("id")
   const [open, setOpen] = useState<any>();
+  const [openEdit, setOpenEdit] = useState<any>();
   const [openDelete, setOpenDelete] = useState<boolean>(false);
-  const [modalData, setModalData] = useState(null);
+  const [modalData, setModalData] = useState<Lesson | null>(null);
 
-  const handleOpenAdd = () => setOpen("add");
-  const handleOpenEdit = (user: any) => {
-    setModalData(user);
-    setOpen("edit");
+  const handleOpenAdd = () => setOpen(true);
+
+  const handleOpenEdit = (lesson: Lesson) => {
+    setModalData(lesson);
+    setOpenEdit(true);
   };
   const handleClose = () => {
-    setOpen("");
+    setOpen(false);
+    setModalData(null);
+  };
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
     setModalData(null);
   };
   const handleCloseDelete = () => {
     setOpenDelete(false);
     handleClose();
   };
-  const handleOpen = () => {
-    if (open === "add" || open === "edit") {
-      setOpen(false);
-      handleClose();
-    } else {
-      handleOpenAdd();
-    }
-  };
   const handleOpenDelete = (user: any) => {
     setModalData(user);
     setOpenDelete(!openDelete);
   };
-  const [lessons, setLessons] = useState([]);
+  const [lessons, setLessons] = useState<Array<Lesson>>([]);
+  const [course, setCourse] = useState<Course | null>(null)
   const { user, notify } = useLayout();
-
+  const _getCourse = (id: any) => {
+    API.get(
+      `api/courses/${id}`,
+      {},
+      (data) => {
+        setCourse(data?.data)
+      },
+      () => { },
+      {
+        Authorization: `Bearer ${user?.access_token}`,
+      }
+    )
+  }
   const _fetchData = (id: any) => {
     API.get(
       `api/lessons/lessons_of_course/${id}`,
@@ -49,7 +61,7 @@ const Lessons = () => {
       (data) => {
         setLessons(data?.data);
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -58,6 +70,7 @@ const Lessons = () => {
   useEffect(() => {
     if (id) {
       _fetchData(id);
+      _getCourse(id)
     }
   }, [id]);
   useEffect(() => {
@@ -66,7 +79,7 @@ const Lessons = () => {
 
   return (
     <AuthLayout title={"Lessons"}>
-      <div className="w-full flex justify-end m-4 items-end">
+      <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
         <Button
           variant="text"
           className="border bg-[#fafafa] shadow-lg"
@@ -77,15 +90,25 @@ const Lessons = () => {
       </div>
       <LessonsModal
         handleClose={handleClose}
-        handleOpen={handleOpen}
-        open={open === "add" || open === "edit"}
+        handleOpen={handleOpenAdd}
+        open={open}
         modalData={modalData}
         _refresh={_fetchData}
+        course={course}
+      />
+      <EditLessonsModal
+        handleClose={handleCloseEdit}
+        handleOpen={handleOpenEdit}
+        open={openEdit}
+        modalData={modalData}
+        _refresh={_fetchData}
+        course={course}
       />
       <LessonsTable
         handleDelete={handleOpenDelete}
         handleOpenEdit={handleOpenEdit}
         lessons={lessons}
+        course_id={parseInt(id ?? "0")}
       />
     </AuthLayout>
   );
