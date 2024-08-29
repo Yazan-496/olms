@@ -137,7 +137,7 @@ const Courses = () => {
             }`}
             onClick={() => handleTabChange("active-courses")}
           >
-            Active Courses
+            Avialable Courses
           </button>
         </div>
       </div>
@@ -148,15 +148,12 @@ const Courses = () => {
         handleOpen={handleOpen}
         open={open}
         _refresh={_fetchData}
-        handleRegister={({
-          course_id,
-          section_id
-        }) => {
+        handleRegister={({ course_id, section_id }) => {
           _register({
             course_id,
-            section_id
-          })
-          handleClose()
+            section_id,
+          });
+          handleClose();
         }}
       />
       <div className="grid grid-cols-3 gap-6">

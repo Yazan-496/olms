@@ -131,6 +131,7 @@ const pages = [
       },
       {
         name: "Logout",
+        permission: "",
         logo: <LogoutLogoSvg />,
         route: "/logout",
       },
@@ -297,26 +298,31 @@ const Sidebar: React.FC<SidebarProps> = ({
                               <ul className={`pl-6 mt-2 ${!open && "hidden"}`}>
                                 {page.children.map((child, i) => {
                                   return (
-                                    <li
-                                      key={i}
-                                      className="mb-1 last:mb-0 flex items-center space-x-2 justify-start"
+                                    <CanCall
+                                      permission={child.permission}
+                                      key={key}
                                     >
-                                      {child.logo}
-                                      <NavLink
-                                        end
-                                        to={child.route}
-                                        className={({ isActive }) =>
-                                          "block transition duration-150 truncate " +
-                                          (isActive
-                                            ? "text-violet-500"
-                                            : "text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200")
-                                        }
+                                      <li
+                                        key={i}
+                                        className="mb-1 last:mb-0 flex items-center space-x-2 justify-start"
                                       >
-                                        <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                          {child.name}
-                                        </span>
-                                      </NavLink>
-                                    </li>
+                                        {child.logo}
+                                        <NavLink
+                                          end
+                                          to={child.route}
+                                          className={({ isActive }) =>
+                                            "block transition duration-150 truncate " +
+                                            (isActive
+                                              ? "text-violet-500"
+                                              : "text-gray-500/90 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200")
+                                          }
+                                        >
+                                          <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                            {child.name}
+                                          </span>
+                                        </NavLink>
+                                      </li>
+                                    </CanCall>
                                   );
                                 })}
                               </ul>
