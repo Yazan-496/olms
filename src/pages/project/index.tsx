@@ -41,7 +41,7 @@ const Project = () => {
   };
   const [project, setProject] = useState<any>(null);
   const [projects, setProjects] = useState(null);
-  const { user, notify } = useLayout();
+  const { user, translate } = useLayout();
 
   const _fetchData = (id: any) => {
     API.get(
@@ -57,7 +57,7 @@ const Project = () => {
         } else {
         }
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -73,7 +73,7 @@ const Project = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Project"}>
+    <AuthLayout title={translate("project")}>
       <div className="w-full flex justify-end m-4 items-end">
         {!project ? (
           <Button
@@ -81,7 +81,7 @@ const Project = () => {
             className="border bg-[#fafafa] shadow-lg"
             onClick={handleOpenAdd}
           >
-            New Project
+            {translate("new_project")}
           </Button>
         ) : (
           <div className="bg-white p-6 w-full rounded-lg shadow-md mx-auto">

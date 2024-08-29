@@ -38,7 +38,7 @@ const RegistrationManagment = () => {
     setOpenDelete(!openDelete);
   };
   const [registration, setUsers] = useState([]);
-  const { user, notify } = useLayout();
+  const { user, translate } = useLayout();
 
   const _fetchData = () => {
     API.get(
@@ -61,7 +61,7 @@ const RegistrationManagment = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Registration Managment"}>
+    <AuthLayout title={translate("registration_managment")}>
       <CanCall permission="CREATE_REGISTERATION">
         <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
           <Button
@@ -69,7 +69,8 @@ const RegistrationManagment = () => {
             className="border bg-[#fafafa] shadow-lg"
             onClick={handleOpenAdd}
           >
-            Add New Registration
+            {translate("add_new_registration")}
+
           </Button>
         </div>
       </CanCall>

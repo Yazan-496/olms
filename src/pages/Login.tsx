@@ -9,7 +9,7 @@ import HeaderHome from "components/HeaderHome";
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false); //
 
-  const { notify, setUser, user } = useLayout();
+  const { notify, setUser, translate } = useLayout();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -63,7 +63,7 @@ items-center"
         <div className="h-full flex items-center justify-center w-full dark:bg-gray-950">
           <div className="bg-white z-20 relative dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md">
             <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">
-              Welcome Back!
+              {translate("welcome_back")}
             </h1>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -71,7 +71,7 @@ items-center"
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                 >
-                  Email Address
+                  {translate("email_address")}
                 </label>
                 <input
                   type="email"
@@ -89,7 +89,7 @@ items-center"
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                 >
-                  Password
+                  {translate("password")}
                 </label>
                 <input
                   type="password"
@@ -105,7 +105,7 @@ items-center"
                   href="#"
                   className="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Forgot Password?
+                  {translate("forgot_password")}
                 </a>
               </div>
               <div className="flex items-center justify-between mb-4">
@@ -122,14 +122,16 @@ items-center"
                     htmlFor="remember"
                     className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                   >
-                    Remember me
+                    {translate("remember_me")}
+
                   </label>
                 </div>
                 <div
                   onClick={() => navigate("/signup")}
                   className="cursor-pointer  hover:underline text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Create Account
+                  {translate("create_account")}
+
                 </div>
               </div>
               <button
@@ -137,7 +139,7 @@ items-center"
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-teal-gradient relative bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-75"
               >
-                {loading ? <LoadingSpinner /> : "Login"}
+                {loading ? <LoadingSpinner /> : translate("login")}
               </button>
             </form>
           </div>

@@ -37,7 +37,7 @@ const Finance = () => {
     setOpenDelete(!openDelete);
   };
   const [finances, setFinances] = useState([]);
-  const { user, notify } = useLayout();
+  const { user, translate } = useLayout();
 
   const _fetchData = () => {
     API.get(
@@ -60,14 +60,15 @@ const Finance = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Finance"}>
+    <AuthLayout title={translate("finance")}>
       <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
         <Button
           variant="text"
           className="border bg-[#fafafa] shadow-lg"
           onClick={handleOpenAdd}
         >
-          New Deposit
+          {translate("new_deposit")}
+
         </Button>
       </div>
       <FinancesModal

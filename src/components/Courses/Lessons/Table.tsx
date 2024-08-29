@@ -1,4 +1,5 @@
 import { LoadingSpinner } from "components/Svgs";
+import { useLayout } from "layout";
 import CanCall from "utils/ability";
 
 export interface Lesson {
@@ -47,11 +48,12 @@ export default function LessonsTable({
   handleDelete: (user: any) => void;
   course_id: number
 }) {
+  const { translate } = useLayout()
   const TABLE_HEAD = [
-    "ID",
-    "Name",
-    "Description",
-    "Actions"
+    translate("id"),
+    translate("name"),
+    translate("description"),
+    translate("actions")
   ];
 
   return (
@@ -106,7 +108,7 @@ export default function LessonsTable({
                         href="#"
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
-                        Edit
+                        {translate("edit")}
                       </a>
                     </CanCall>
                     <CanCall permission="DELETE_COURSE">
@@ -115,7 +117,7 @@ export default function LessonsTable({
                         href="#"
                         className="font-medium text-red-600 dark:text-red-500 hover:underline"
                       >
-                        Delete
+                        {translate("delete")}
                       </a>
                     </CanCall>
                   </td>

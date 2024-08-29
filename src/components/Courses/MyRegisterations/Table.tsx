@@ -1,3 +1,4 @@
+
 import { Dialog, DialogBody } from "@material-tailwind/react";
 import { useLayout } from "layout";
 import { useState } from "react";
@@ -12,6 +13,7 @@ export default function MyRegisterationsTable({
   handleOpenEdit: (user: any) => void;
   handleDelete: (user: any) => void;
 }) {
+  const { translate } = useLayout()
   const TABLE_HEAD = [
     "ID",
     "Photo",
@@ -78,9 +80,8 @@ export default function MyRegisterationsTable({
               {myregisterations?.map((transaction: any, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
-                    index % 2 === 0 ? "" : "bg-gray-50"
-                  }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
+                    }`}
                 >
                   {" "}
                   <td className="px-6 py-4  text-start">

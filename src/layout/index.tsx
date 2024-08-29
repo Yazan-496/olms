@@ -26,6 +26,7 @@ export interface User {
   role?: Role;
   access_token?: string;
   permissions?: string[];
+  img?: string;
 }
 
 export interface Role {
@@ -36,7 +37,7 @@ export interface Role {
 interface LayoutContextProps {
   loadingPage: boolean;
   setLoadingPage: React.Dispatch<React.SetStateAction<boolean>>;
-  user: User;
+  user: User | null;
   _removeUser: () => void;
   setUser: React.Dispatch<React.SetStateAction<any>>;
   notify: ({
@@ -65,7 +66,7 @@ export const useLayout = () => {
 
 export const LayoutProvider = ({ children }: { children: ReactNode }) => {
   const [loadingPage, setLoadingPage] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [readLocaStorage, setReadLocaStorage] = useState(false);
   const [language, setLanguage] = useState<string>(
     localStorage.getItem("lang") || "en"

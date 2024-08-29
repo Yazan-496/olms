@@ -6,7 +6,7 @@ import TransactionsTable from "components/Financial/Transactions/Table";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
-  const { user, notify } = useLayout();
+  const { user, translate } = useLayout();
 
   const _fetchData = () => {
     API.get(
@@ -15,7 +15,7 @@ const Transactions = () => {
       (data) => {
         setTransactions(data?.data);
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -29,7 +29,7 @@ const Transactions = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Transactions"}>
+    <AuthLayout title={translate("transactions")}>
       <TransactionsTable transactions={transactions} />
     </AuthLayout>
   );
