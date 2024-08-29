@@ -23,6 +23,7 @@ export default function CoursesTable({
     "Teacher",
     "Started At",
     "Lessons",
+    "Projects",
     "Actions",
   ];
 
@@ -98,6 +99,15 @@ export default function CoursesTable({
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       Show Lessons
+                    </NavLink>
+                  </td>
+                  <td className="min-w-[100px] px-2 py-2  text-start">
+                    <NavLink
+                      // onClick={() => handleOpenLessons(course)}
+                      to={`/project/${course?.id}`}
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Show Project
                     </NavLink>
                   </td>
                   <td className="text-left flex items-center justify-center gap-2 px-2 py-2 ">

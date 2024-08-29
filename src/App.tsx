@@ -27,6 +27,7 @@ import Profile from "pages/profile/personal-informations";
 import CoursesManagment from "pages/courses/courses-managment";
 import RegistrationManagment from "pages/courses/registration";
 import Lessons from "pages/lessons/index.tsx";
+import Project from "pages/project/index.tsx";
 export const router = [
   {
     path: "/",
@@ -92,6 +93,11 @@ export const router = [
     path: "/lessons/:id",
     element: <ProtectedRoute element={<Lessons />} />,
     title: "Lessons",
+  },
+  {
+    path: "/project/:id",
+    element: <ProtectedRoute element={<Project />} />,
+    title: "Project",
   },
   {
     path: "/categories/:course",
