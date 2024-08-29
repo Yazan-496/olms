@@ -60,15 +60,17 @@ export default function CoursesTable({
               {courses.map((course: any, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
-                    }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
+                    index % 2 === 0 ? "" : "bg-gray-50"
+                  }`}
                 >
                   <td className="px-2 py-2 text-start">{course?.id}</td>
                   <td className="min-w-[100px] px-2 py-2 font-medium  text-gray-900 whitespace-nowrap dark:text-white flex items-center space-x-2">
                     {course?.photo_path && (
                       <img
-                        src={`${import.meta.env.VITE_BASE_URL}${course?.photo_path
-                          }`}
+                        src={`${import.meta.env.VITE_BASE_URL}${
+                          course?.photo_path
+                        }`}
                         alt={course?.name}
                         className="w-10 h-10 rounded-full object-cover"
                       />
@@ -100,13 +102,15 @@ export default function CoursesTable({
                     </NavLink>
                   </td>
                   <td className="min-w-[100px] px-2 py-2  text-start">
-                    <NavLink
-                      // onClick={() => handleOpenLessons(course)}
-                      to={`/project/${course?.id}`}
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Show Project
-                    </NavLink>
+                    <CanCall permission="SHOW_PROJECTS">
+                      <NavLink
+                        // onClick={() => handleOpenLessons(course)}
+                        to={`/project/${course?.id}`}
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        Show Project
+                      </NavLink>
+                    </CanCall>
                   </td>
                   <td className="text-left flex items-center justify-center gap-2 px-2 py-2 ">
                     <CanCall permission="UPDATE_COURSE">

@@ -12,6 +12,8 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
   align = "left",
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const { language, setLanguage, translate } = useLayout();
+
   const { user } = useLayout();
   const trigger = useRef<HTMLButtonElement>(null);
   const dropdown = useRef<HTMLDivElement>(null);
@@ -31,8 +33,10 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
   }, [dropdownOpen]);
-
-  // close if the esc key is pressed
+  const languages = [
+    { code: "en", name: "English" },
+    { code: "ar", name: "Arabic" },
+  ];
   useEffect(() => {
     const keyHandler = (event: KeyboardEvent) => {
       if (!dropdownOpen || event.key !== "Escape") return;
@@ -43,6 +47,11 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
   }, [dropdownOpen]);
 
   const defaultUserImage = import.meta.env.VITE_DEFAULT_USER_IMAGE;
+  const handleLanguageChange = (event: any) => {
+    localStorage.setItem("lang", event.target.value);
+    setLanguage(event.target.value);
+    // window.location.reload();
+  };
   return (
     <div className="relative inline-flex">
       <button
@@ -105,7 +114,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
                 to="/settings"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                Settings
+                {translate("settings")}
               </Link>
             </li>
             <li>
@@ -116,6 +125,28 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
               >
                 Sign Out
               </Link>
+            </li>
+            <li>
+              <div className="flex items-center py-1 px-3">
+                <label
+                  htmlFor="language-select"
+                  className="text-sm font-medium text-gray-600 dark:text-gray-100 mr-2"
+                >
+                  Language:
+                </label>
+                <select
+                  id="language-select"
+                  value={language}
+                  onChange={handleLanguageChange}
+                  className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-1 px-2 text-sm"
+                >
+                  {languages.map((lang) => (
+                    <option key={lang.code} value={lang.code}>
+                      {lang.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </li>
           </ul>
         </div>

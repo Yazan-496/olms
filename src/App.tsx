@@ -26,8 +26,9 @@ import Transactions from "pages/financial/transactions";
 import Profile from "pages/profile/personal-informations";
 import CoursesManagment from "pages/courses/courses-managment";
 import RegistrationManagment from "pages/courses/registration";
-import Lessons from "pages/lessons/index.tsx";
-import Project from "pages/project/index.tsx";
+import Lessons from "pages/lessons";
+import Project from "pages/project";
+import MyRegisteratoins from "pages/my-registeration";
 export const router = [
   {
     path: "/",
@@ -83,6 +84,11 @@ export const router = [
     path: "/registration",
     element: <ProtectedRoute element={<RegistrationManagment />} />,
     title: "Registrations",
+  },
+  {
+    path: "/my-registration",
+    element: <ProtectedRoute element={<MyRegisteratoins />} />,
+    title: "My Registrations",
   },
   {
     path: "/courses/:lesson",
