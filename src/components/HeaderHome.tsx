@@ -3,6 +3,17 @@ import { NavLink } from "react-router-dom";
 
 const HeaderHome = () => {
   const { translate } = useLayout()
+
+  const languages = [
+    { code: "en", name: "English" },
+    { code: "ar", name: "Arabic" },
+  ];
+  const { language, setLanguage, translate } = useLayout();
+  const handleLanguageChange = (event: any) => {
+    localStorage.setItem("lang", event.target.value);
+    setLanguage(event.target.value);
+    // window.location.reload();
+  };
   return (
     <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-16 2xl:px-16">
       <div
@@ -38,6 +49,20 @@ const HeaderHome = () => {
               </div>
             </li>
           </ul>
+        </div>
+        <div className="flex items-center py-1 px-3">
+          <select
+            id="language-select"
+            value={language}
+            onChange={handleLanguageChange}
+            className="bg-transparent border-white cursor-pointer text-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-1 px-2 text-sm"
+          >
+            {languages.map((lang) => (
+              <option className="text-black" key={lang.code} value={lang.code}>
+                {lang.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="">
           <ul className="flex justify-end text-white">
