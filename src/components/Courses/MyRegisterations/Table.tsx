@@ -1,5 +1,5 @@
-
 import { Dialog, DialogBody } from "@material-tailwind/react";
+import axios from "axios";
 import { useLayout } from "layout";
 import { useState } from "react";
 import API from "utils/API";
@@ -13,7 +13,7 @@ export default function MyRegisterationsTable({
   handleOpenEdit: (user: any) => void;
   handleDelete: (user: any) => void;
 }) {
-  const { translate } = useLayout()
+  const { translate } = useLayout();
   const TABLE_HEAD = [
     "ID",
     "Photo",
@@ -23,7 +23,38 @@ export default function MyRegisterationsTable({
     "Details",
     "Degree",
   ];
+  const [loadingFile, setLoadingFile] = useState(false);
+  const [fileUploaded, setFile] = useState(null);
+  const [desc, setDesc] = useState<any>(null);
+  const handleUploadFile = async (e: any) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
 
+    const formData = new FormData();
+
+    formData.append("file", selectedFile);
+    try {
+      setLoadingFile(true);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/api/upload_file`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.access_token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response, "response");
+      if (response.data?.data?.file_path) {
+        setLoadingFile(false);
+        setFile(response.data.data.file_path);
+      }
+    } catch (error) {
+      setLoadingFile(false);
+    }
+  };
   const { user, notify } = useLayout();
   const [course, setCourse] = useState<any>(null);
   const [openModal, setOpenModal] = useState(false);
@@ -46,6 +77,52 @@ export default function MyRegisterationsTable({
   };
   const handleOpen = () => {
     setOpenModal(!openModal);
+  };
+  const _openIframe = () => {
+    setOpenIframe((prev) => {
+      return {
+        ...prev,
+        show: !prev.show,
+      };
+    });
+  };
+
+  const [openIframe, setOpenIframe] = useState({ show: false, url: "" });
+  const handleOpenIframe = (url: any) => {
+    // setOpenIframe({ show: true, url: url });
+  };
+  const attend = (lesson_id: any) => {
+    API.get(
+      `/api/lesson/attend_lesson/${lesson_id}`,
+      {},
+      (data) => data,
+      (e) => {},
+      {
+        Authorization: `Bearer ${user?.access_token}`,
+      }
+    );
+  };
+  const handleSave = (project_id: any) => {
+    API.post(
+      `/api/create_student_project`,
+      {
+        description: desc,
+        project_id: project_id,
+        file: fileUploaded,
+      },
+      (data) => {
+        data;
+        notify({
+          type: "success",
+          message: "Project Upload Successfully",
+          timeout: 2000,
+        });
+      },
+      (e) => {},
+      {
+        Authorization: `Bearer ${user?.access_token}`,
+      }
+    );
   };
   return (
     <>
@@ -80,8 +157,9 @@ export default function MyRegisterationsTable({
               {myregisterations?.map((transaction: any, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
-                    }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
+                    index % 2 === 0 ? "" : "bg-gray-50"
+                  }`}
                 >
                   {" "}
                   <td className="px-6 py-4  text-start">
@@ -134,6 +212,93 @@ export default function MyRegisterationsTable({
         >
           <DialogBody>
             <div className="mt-[10px] mb-[10px]">
+              <div className="text-[#2f4880] w-full text-start">
+                Course Project
+              </div>
+              <div
+                className={`w-full flex items-center justify-between text-center 
+                    shadow-sm p-[5px] m-[5px] border-[1px] 
+                    rounded-[10px]
+                      `}
+              >
+                <div className="text-[#2f4880] text-start">
+                  {course?.project?.name}
+                </div>
+                <div className="text-[#2f4880] text-start">
+                  {course?.project?.description}
+                </div>
+                <div className="text-[#2f4880] text-start">
+                  Started Date:{course?.project?.start_date}
+                </div>
+                <div className="text-[#2f4880] text-start">
+                  Ended Date:{course?.project?.end_date}
+                </div>
+                <a
+                  href={`${import.meta.env.VITE_BASE_URL}${
+                    course?.project?.file
+                  }`}
+                  download
+                  target="_blank"
+                  title="Download File"
+                  className="relative w-12 h-12 block"
+                >
+                  <img
+                    src={`/images/file.svg`}
+                    alt="."
+                    className="w-12 h-12 object-center object-cover rounded-full transition-all duration-500 delay-500 transform cursor-pointer"
+                  />
+                </a>
+              </div>
+              <div className="relative w-full h-[150px] group/image  flex items-center justify-between">
+                {/* Container for the edit button */}
+                <input
+                  type="text"
+                  placeholder="Description"
+                  onChange={(e) => setDesc(e?.target?.value)}
+                  className="cursor-pointer"
+                />
+                <div className="relative inset-0 flex items-center justify-center  bg-opacity-50 rounded-full opacity-100 transition-opacity duration-300">
+                  <input
+                    type="file"
+                    onChange={handleUploadFile}
+                    className="opacity-0 absolute inset-0 cursor-pointer"
+                  />
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded"
+                  >
+                    Upload Project
+                  </div>
+                </div>{" "}
+                {loadingFile ? (
+                  <div className="w-36 flex items-center justify-center border border-black/30 h-36 object-center object-cover rounded-full transition-all duration-500 delay-500 transform">
+                    Uploading...{" "}
+                  </div>
+                ) : fileUploaded ? (
+                  <a
+                    href={`${import.meta.env.VITE_BASE_URL}${fileUploaded}`}
+                    download
+                    target="_blank"
+                    title="Download File"
+                    className="relative w-12 h-12 block"
+                  >
+                    <img
+                      src={`/images/file.svg`}
+                      alt="."
+                      className="w-12 h-12 object-center object-cover rounded-full transition-all duration-500 delay-500 transform cursor-pointer"
+                    />
+                  </a>
+                ) : null}
+                {fileUploaded && (
+                  <div
+                    onClick={() => handleSave(course?.project?.id)}
+                    className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded"
+                  >
+                    Send Project
+                  </div>
+                )}
+              </div>
+
               <div className="flex flex-row justify-between m-[5px]">
                 <div
                   className={`w-full text-center items-center 
@@ -150,9 +315,27 @@ export default function MyRegisterationsTable({
                   <div>
                     {course?.registered_section?.sessions?.map(
                       (session: any, index: number) => (
-                        <div className="text-start ml-[10px]" key={index}>
-                          - {session?.lesson?.name} / {session?.date}{" "}
-                          {session?.time}
+                        <div
+                          className="flex items-center justify-between px-10 border-b pb-2"
+                          key={index}
+                        >
+                          <div className="text-start ml-[10px]">
+                            - {session?.lesson?.name} / {session?.date}{" "}
+                            {session?.time}
+                          </div>
+                          {session?.meet_url && (
+                            <a
+                              target="_blank"
+                              href={session?.meet_url}
+                              onClick={() => {
+                                // handleOpenIframe(session?.meet_url);
+                                attend(session?.lesson_id);
+                              }}
+                              className=" bg-green-200 p-1 rounded cursor-pointer hover:text-blue-500"
+                            >
+                              Enter Lesson
+                            </a>
+                          )}
                         </div>
                       )
                     )}
@@ -160,6 +343,22 @@ export default function MyRegisterationsTable({
                 </div>
               </div>
             </div>
+          </DialogBody>
+        </Dialog>
+      )}
+      {openIframe.show && (
+        <Dialog
+          className="z-[999]"
+          open={openIframe.show}
+          handler={_openIframe}
+          style={{
+            height: "90dvh",
+            maxWidth: "90%",
+            minWidth: "60%",
+          }}
+        >
+          <DialogBody>
+            {openIframe.url && <iframe src={openIframe.url}></iframe>}
           </DialogBody>
         </Dialog>
       )}

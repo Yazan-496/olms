@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import CourseCard from "components/CourseCard";
 import { useEffect, useState } from "react";
 import API from "utils/API";
+import { useLayout } from "layout";
 
 // const categories = [
 //   {
@@ -113,6 +114,7 @@ import API from "utils/API";
 // ];
 
 const HomePage = () => {
+  const { translate } = useLayout();
   const [categories, setCategories] = useState([]);
   const _fetchData = () => {
     API.get(
@@ -121,7 +123,7 @@ const HomePage = () => {
       (data) => {
         setCategories(data?.data?.categoires);
       },
-      (e) => { }
+      (e) => {}
     );
   };
 
@@ -156,17 +158,16 @@ items-center min-h-screen"
             <div className="lg:w-3/4 xl:w-2/4 relative z-10 h-100 lg:mt-16">
               <div>
                 <h1 className="text-white text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
-                  Your Future Begins with Smart Online Learning.
+                  {translate("your_future_begins_with_smart_online_learning")}
                 </h1>
                 <p className="text-blue-100 text-xl md:text-2xl leading-snug mt-4">
-                  Welcome to Our Online Learning Platform, Where Your Success
-                  and Comfort are Our Priorities.
+                  {translate("w_t_o")}
                 </p>
                 <NavLink
                   to="/signup"
                   className="px-8 py-4 bg-teal-500 text-white rounded inline-block mt-8 font-semibold"
                 >
-                  Enroll Now
+                  {translate("enroll")}
                 </NavLink>
               </div>
             </div>
@@ -179,17 +180,10 @@ items-center min-h-screen"
           <div className="flex flex-col lg:flex-row lg:-mx-8">
             <div className="w-full lg:w-1/2 lg:px-8">
               <h2 className="text-3xl leading-tight font-bold mt-4">
-                Welcome to Our Online Learning Hub
+                {translate("w_t_o_o")}
               </h2>
-              <p className="text-lg mt-4 font-semibold">
-                Excellence in Online Education at Your Fingertips
-              </p>
-              <p className="mt-2 leading-relaxed">
-                Experience seamless and effective learning. Our platform
-                combines user-friendly design with comprehensive resources to
-                enhance your educational journey. Join us to achieve your goals
-                with ease and convenience.
-              </p>
+              <p className="text-lg mt-4 font-semibold">{translate("e_i_o")}</p>
+              <p className="mt-2 leading-relaxed">{translate("e_long")}</p>
             </div>
             <div className="w-full lg:w-1/2 lg:px-8 mt-12 lg:mt-0">
               <div className="md:flex">
@@ -198,13 +192,10 @@ items-center min-h-screen"
                 </div>
                 <div className="md:ml-8 mt-4 md:mt-0">
                   <h4 className="text-xl font-bold leading-tight">
-                    All Your Learning Needs in One Place
+                    {translate("all_your")}
                   </h4>
                   <p className="mt-2 leading-relaxed">
-                    Our comprehensive services allow you to receive all needed
-                    dental care right here in our state-of-art office – from
-                    dental cleanings and fillings to dental implants and
-                    extractions.
+                    {translate("our_long")}
                   </p>
                 </div>
               </div>
@@ -214,12 +205,10 @@ items-center min-h-screen"
                 </div>
                 <div className="md:ml-8 mt-4 md:mt-0">
                   <h4 className="text-xl font-bold leading-tight">
-                    Our Learner-Centered Approach
+                    {translate("our_learn")}
                   </h4>
                   <p className="mt-2 leading-relaxed">
-                    Our platform offers everything you need for a complete
-                    learning experience, from interactive courses and resources
-                    to personalized support and assessments
+                    {translate("our_platform")}
                   </p>
                 </div>
               </div>
@@ -234,11 +223,11 @@ items-center min-h-screen"
                   className="h-20 mx-auto"
                 />
                 <h4 className="text-xl font-bold mt-4">
-                  Brightening Your Learning Journey
+                  {translate("br_your")}
                 </h4>
                 <p className="mt-1">Discover the Benefits of Our Expertise</p>
                 <NavLink to="/signup" className="block mt-4">
-                  Read More
+                  {translate("read_more")}
                 </NavLink>
               </div>
             </div>
@@ -252,7 +241,7 @@ items-center min-h-screen"
                 <h4 className="text-xl font-bold mt-4">Oral Surgery</h4>
                 <p className="mt-1">Let us show you how our experience.</p>
                 <NavLink to="/signup" className="block mt-4">
-                  Read More
+                  {translate("read_more")}
                 </NavLink>
               </div>
             </div>
@@ -266,7 +255,7 @@ items-center min-h-screen"
                 <h4 className="text-xl font-bold mt-4">Painless Dentistry</h4>
                 <p className="mt-1">Let us show you how our experience.</p>
                 <NavLink to="/signup" className="block mt-4">
-                  Read More
+                  {translate("read_more")}
                 </NavLink>
               </div>
             </div>
@@ -280,7 +269,7 @@ items-center min-h-screen"
                 <h4 className="text-xl font-bold mt-4">Periodontics</h4>
                 <p className="mt-1">Let us show you how our experience.</p>
                 <NavLink to="/signup" className="block mt-4">
-                  Read More
+                  {translate("read_more")}
                 </NavLink>
               </div>
             </div>
@@ -330,20 +319,16 @@ items-center min-h-screen"
           <div className="flex flex-col lg:flex-row lg:-mx-8">
             <div className="w-full lg:w-1/2 lg:px-8">
               <h2 className="text-3xl leading-tight font-bold mt-4">
-                Why Choose Our Learning Platform?
+                {translate("why_s")}
               </h2>
-              <p className="mt-2 leading-relaxed">
-                Experience the Difference with Our Expertly Crafted Courses,
-                Comprehensive Resources, and Personalized Support. We are
-                dedicated to helping you succeed with ease and confidence.
-              </p>
+              <p className="mt-2 leading-relaxed">{translate("why_exe")}</p>
             </div>
             <div className="w-full -w-mmd:maxd md:mx-auto lg:w-1/2 lg:px-8 mt-12 mt:md-0">
               <div className="bg-gray-400 w-full h-64 rounded-lg">
                 <img src="/images/empower-you.png" />
               </div>
               <p className="italic text-sm mt-2 text-center">
-                Empowering You with Knowledge and Growth
+                {translate("why_sss")}
               </p>
             </div>
           </div>
@@ -354,15 +339,11 @@ items-center min-h-screen"
         {/* start cta */}
         <section className="relative bg-blue-teal-gradient px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-12 text-center md:text-left">
           <div className="md:flex md:items-center md:justify-center">
-            <h2 className="text-xl font-bold text-white">
-              Get in touch with us today! <br className="block md:hidden" />
-              Call us on: +963 ... ... ...
-            </h2>
             <NavLink
               to="/signup"
               className="px-8 py-4 bg-white text-blue-600 rounded inline-block font-semibold md:ml-8 mt-4 md:mt-0"
             >
-              Schedule Your Session
+              {translate("schedule")}
             </NavLink>
           </div>
         </section>
@@ -375,7 +356,7 @@ items-center min-h-screen"
             </div>
             <div className="w-full lg:w-1/6 mt-8 lg:mt-0 lg:mx-4">
               <h5 className="uppercase tracking-wider font-semibold text-gray-500">
-                Courses
+                {translate("courses")}
               </h5>
               <ul className="mt-4">
                 <li className="mt-2">
@@ -384,7 +365,7 @@ items-center min-h-screen"
                     title=""
                     className="opacity-75 hover:opacity-100"
                   >
-                    Student Success StoriesGeneral Dentistry
+                    {translate("schedule")}
                   </NavLink>
                 </li>
                 <li className="mt-2">
@@ -393,7 +374,7 @@ items-center min-h-screen"
                     title=""
                     className="opacity-75 hover:opacity-100"
                   >
-                    Resources
+                    {translate("student_shsd")}
                   </NavLink>
                 </li>
                 <li className="mt-2"></li>
@@ -401,7 +382,7 @@ items-center min-h-screen"
             </div>
             <div className="w-full lg:w-2/6 mt-8 lg:mt-0 lg:mx-4 lg:pr-8">
               <h5 className="uppercase tracking-wider font-semibold text-gray-500">
-                Contact Details
+                {translate("read_moreee")}
               </h5>
               <ul className="mt-4">
                 <li>
@@ -445,7 +426,7 @@ items-center min-h-screen"
                     <span className="ml-3">
                       Mon - Fri: 9:00 - 19:00
                       <br />
-                      Closed on Weekends
+                      {translate("closed_s")}
                     </span>
                   </NavLink>
                 </li>
@@ -493,7 +474,7 @@ items-center min-h-screen"
             </div>
             <div className="w-full lg:w-1/6 mt-8 lg:mt-0 lg:mx-4">
               <h5 className="uppercase tracking-wider font-semibold text-gray-500">
-                We're Social
+                {translate("social_a")}
               </h5>
               <ul className="mt-4 flex">
                 <li>

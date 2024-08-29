@@ -48,6 +48,7 @@ const Project = () => {
       `api/projects_of_course/${id}`,
       {},
       (data) => {
+        console.log(data?.data[0]);
         setProject(data?.data[0]);
         if (
           data?.data[0]?.student_projects &&
@@ -57,7 +58,7 @@ const Project = () => {
         } else {
         }
       },
-      (e) => { },
+      (e) => {},
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -127,6 +128,7 @@ const Project = () => {
           handleDelete={handleOpenDelete}
           handleOpenEdit={handleOpenEdit}
           projects={projects}
+          _refresh={() => _fetchData(id)}
         />
       }
     </AuthLayout>
