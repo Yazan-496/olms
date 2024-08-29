@@ -1,6 +1,8 @@
+import { useLayout } from "layout";
 import { NavLink } from "react-router-dom";
 
 const HeaderHome = () => {
+  const { translate } = useLayout()
   return (
     <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-16 xl:px-16 2xl:px-16">
       <div
@@ -18,7 +20,9 @@ const HeaderHome = () => {
                 >
                   <path d="M12,2C7.589,2,4,5.589,4,9.995C3.971,16.44,11.696,21.784,12,22c0,0,8.029-5.56,8-12C20,5.589,16.411,2,12,2z M12,14 c-2.21,0-4-1.79-4-4s1.79-4,4-4s4,1.79,4,4S14.21,14,12,14z" />
                 </svg>
-                <span className="ml-2">Damascus, Syria</span>
+                <span className="ml-2">
+                  {translate("damascus_syria")}
+                </span>
               </div>
             </li>
             <li className="ml-6">
@@ -107,7 +111,9 @@ const HeaderHome = () => {
             height={20}
             viewBox="0 0 20 20"
           >
-            <title>menu</title>
+            <title>
+              {translate("menu")}
+            </title>
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
         </label>
@@ -120,7 +126,7 @@ const HeaderHome = () => {
                   className="py-2 inline-block md:text-white md:hidden lg:block font-semibold"
                   to="/"
                 >
-                  About Us
+                  {translate("about_us")}
                 </NavLink>
               </li>
               <li className="md:ml-4">
@@ -128,7 +134,7 @@ const HeaderHome = () => {
                   className="py-2 inline-block md:text-white md:px-2 font-semibold"
                   to="/"
                 >
-                  Courses
+                  {translate("courses")}
                 </NavLink>
               </li>
               <li className="md:ml-4">
@@ -136,7 +142,8 @@ const HeaderHome = () => {
                   className="py-2 inline-block md:text-white md:px-2 font-semibold"
                   to="/"
                 >
-                  Student Success Stories
+                  {translate("student_success_stories")}
+
                 </NavLink>
               </li>
               <li className="md:ml-4 md:hidden lg:block">
@@ -144,7 +151,7 @@ const HeaderHome = () => {
                   className="py-2 inline-block md:text-white md:px-2 font-semibold"
                   to="/"
                 >
-                  Resources
+                  {translate("resources")}
                 </NavLink>
               </li>
               <li className="md:ml-4">
@@ -152,7 +159,7 @@ const HeaderHome = () => {
                   className="py-2 inline-block md:text-white md:px-2 font-semibold"
                   to="/"
                 >
-                  Contact Us
+                  {translate("contact_us")}
                 </NavLink>
               </li>
               <li className="md:ml-6 mt-3 md:mt-0">
@@ -160,7 +167,7 @@ const HeaderHome = () => {
                   className="inline-block font-semibold px-4 py-2 text-white bg-blue-600 md:bg-transparent md:text-white border border-white rounded"
                   to="/signup"
                 >
-                  Schedule Your Session
+                  {translate("schedule_your_session")}
                 </NavLink>
               </li>
             </ul>

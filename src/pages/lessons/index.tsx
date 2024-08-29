@@ -40,7 +40,7 @@ const Lessons = () => {
   };
   const [lessons, setLessons] = useState<Array<Lesson>>([]);
   const [course, setCourse] = useState<Course | null>(null)
-  const { user, notify } = useLayout();
+  const { user, translate } = useLayout();
   const _getCourse = (id: any) => {
     API.get(
       `api/courses/${id}`,
@@ -78,14 +78,14 @@ const Lessons = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Lessons"}>
+    <AuthLayout title={translate("lessons")}>
       <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
         <Button
           variant="text"
           className="border bg-[#fafafa] shadow-lg"
           onClick={handleOpenAdd}
         >
-          New Lesson
+          {translate("new_lessons")}
         </Button>
       </div>
       <LessonsModal

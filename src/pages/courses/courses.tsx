@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import API from "utils/API";
 
 const Courses = () => {
-  const { user, notify } = useLayout();
+  const { user, notify, translate } = useLayout();
   const [allCourses, setAllCourses] = useState([]);
   const [myCourses, setMyCourses] = useState([]);
   const [activeCourses, setActiveCourses] = useState([]);
@@ -34,7 +34,7 @@ const Courses = () => {
         setCourse(response?.data ?? []);
       } else {
       }
-    } catch (err) {}
+    } catch (err) { }
   };
   const handleOpen = () => {
     setOpen(true);
@@ -116,28 +116,26 @@ const Courses = () => {
     handleOpen();
   };
   return (
-    <AuthLayout title="Courses">
+    <AuthLayout title={translate("courses")}>
       <div className="mb-4 border-b border-gray-200">
         <div className="flex space-x-4">
           <button
-            className={`py-2 px-4 font-medium rounded-t-lg ${
-              activeTab === "all"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={`py-2 px-4 font-medium rounded-t-lg ${activeTab === "all"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("all")}
           >
-            All Courses
+            {translate("all_courses")}
           </button>
           <button
-            className={`py-2 px-4 font-medium rounded-t-lg ${
-              activeTab === "active-courses"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={`py-2 px-4 font-medium rounded-t-lg ${activeTab === "active-courses"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
+              }`}
             onClick={() => handleTabChange("active-courses")}
           >
-            Avialable Courses
+            {translate("avialable_courses")}
           </button>
         </div>
       </div>

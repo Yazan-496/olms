@@ -1,3 +1,5 @@
+import { useLayout } from "layout";
+
 export default function MyRegisterationsTable({
   handleOpenEdit,
   handleDelete,
@@ -7,13 +9,14 @@ export default function MyRegisterationsTable({
   handleOpenEdit: (user: any) => void;
   handleDelete: (user: any) => void;
 }) {
+  const { translate } = useLayout()
   const TABLE_HEAD = [
-    "ID",
-    "Student Name",
-    "Name",
-    "Description",
-    "file",
-    "Degree",
+    translate("id"),
+    translate("student_name"),
+    translate("name"),
+    translate("description"),
+    translate("file"),
+    translate("degree"),
   ];
 
   return (
@@ -49,9 +52,8 @@ export default function MyRegisterationsTable({
               {myregisterations?.map((transaction: any, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
-                    index % 2 === 0 ? "" : "bg-gray-50"
-                  }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
+                    }`}
                 >
                   <td className="px-6 py-4  text-start">
                     {transaction?.user.national_number}
@@ -59,9 +61,8 @@ export default function MyRegisterationsTable({
                   <td className="px-6 py-4 font-medium  text-gray-900 whitespace-nowrap dark:text-white flex items-center space-x-2">
                     {transaction?.user?.personal_picture && (
                       <img
-                        src={`${import.meta.env.VITE_BASE_URL}${
-                          transaction?.user?.personal_picture
-                        }`}
+                        src={`${import.meta.env.VITE_BASE_URL}${transaction?.user?.personal_picture
+                          }`}
                         alt={transaction.user?.name}
                         className="w-10 h-10 rounded-full object-cover"
                       />

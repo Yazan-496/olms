@@ -10,7 +10,7 @@ import CanCall from "utils/ability";
 import API from "utils/API";
 
 const Categories = () => {
-  const { user } = useLayout();
+  const { user, translate } = useLayout();
   const { course, lesson } = useParams();
   const [open, setOpen] = useState<any>();
   const [openDelete, setOpenDelete] = useState<boolean>(false);
@@ -66,7 +66,7 @@ const Categories = () => {
     _fetchData();
   }, []);
   return (
-    <AuthLayout title={"Categories"}>
+    <AuthLayout title={translate("categories")}>
       <CanCall permission="CREATE_CATEGORY">
         <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
           <Button
@@ -74,7 +74,7 @@ const Categories = () => {
             className="border bg-[#fafafa] shadow-lg"
             onClick={handleOpenAdd}
           >
-            Add New Category
+            {translate("add_new_category")}
           </Button>
         </div>
       </CanCall>
