@@ -60,7 +60,24 @@ const Courses = () => {
       }
     );
   };
-
+  const _register = (data: any) => {
+    setLoading(true);
+    const url = `/api/student_registeration/register`;
+    API.post(
+      url,
+      data,
+      (data) => {
+        setLoading(false);
+        setAllCourses(data?.data || []);
+      },
+      (e) => {
+        setLoading(false);
+      },
+      {
+        Authorization: `Bearer ${user?.access_token}`,
+      }
+    );
+  };
   useEffect(() => {
     _fetchData();
   }, []);
@@ -146,6 +163,16 @@ const Courses = () => {
         handleOpen={handleOpen}
         open={open}
         _refresh={_fetchData}
+        handleRegister={({
+          course_id,
+          section_id
+        }) => {
+          _register({
+            course_id,
+            section_id
+          })
+          handleClose()
+        }}
       />
       <div className="grid grid-cols-3 gap-6">
         {loading && (

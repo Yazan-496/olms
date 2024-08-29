@@ -7,6 +7,13 @@ interface CourseModalProps {
   _refresh: () => void;
   open: boolean;
   handleOpen: () => void;
+  handleRegister: ({
+    section_id,
+    course_id
+  }: {
+    section_id: number;
+    course_id: number;
+  }) => void;
 }
 const CourseDetailsModal = ({
   data,
@@ -14,6 +21,7 @@ const CourseDetailsModal = ({
   handleClose,
   open,
   handleOpen,
+  handleRegister
 }: CourseModalProps) => {
   const [selectedSection, setSelectedSection] = useState(null)
 
@@ -94,7 +102,10 @@ const CourseDetailsModal = ({
         <div className="flex justify-between mt-6 w-3">
           <button
             onClick={() => {
-
+              handleRegister({
+                section_id: parseInt(selectedSection ?? "0"),
+                course_id: parseInt(data?.id)
+              })
             }}
             className="border-[1px] text-[#757ecb] border-[#757ecb] 
             mr-[20px]
