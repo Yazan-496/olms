@@ -41,6 +41,7 @@ const Courses = () => {
   };
   const handleClose = () => {
     setOpen(false);
+    _fetchData();
   };
   const _fetchData = () => {
     setLoading(true);
@@ -61,22 +62,39 @@ const Courses = () => {
     );
   };
   const _register = (data: any) => {
-    setLoading(true);
-    const url = `/api/student_registeration/register`;
-    API.post(
-      url,
-      data,
-      (data) => {
-        setLoading(false);
-        setAllCourses(data?.data || []);
-      },
-      (e) => {
-        setLoading(false);
-      },
-      {
-        Authorization: `Bearer ${user?.access_token}`,
-      }
-    );
+    console.log(data?.is_available, "ssss");
+    if (!!data?.is_available) {
+      notify({
+        type: "warning",
+        message: "This Course Is Not Availabel Now",
+        timeout: 2000,
+      });
+      return;
+    }
+    if (!data?.is_subscribed) {
+      setLoading(true);
+      const url = `/api/student_registeration/register`;
+      API.post(
+        url,
+        data,
+        (data) => {
+          setLoading(false);
+          setAllCourses(data?.data || []);
+        },
+        (e) => {
+          setLoading(false);
+        },
+        {
+          Authorization: `Bearer ${user?.access_token}`,
+        }
+      );
+    } else {
+      notify({
+        type: "warning",
+        message: "You are already Enrolled in this course ",
+        timeout: 2000,
+      });
+    }
   };
   useEffect(() => {
     _fetchData();
@@ -105,7 +123,7 @@ const Courses = () => {
       case "active-courses":
         return activeCourses;
       default:
-        return [];
+        return allCourses;
     }
   };
   const [waitDetails, setWaitDetails] = useState(null);
@@ -148,8 +166,15 @@ const Courses = () => {
         handleOpen={handleOpen}
         open={open}
         _refresh={_fetchData}
-        handleRegister={({ course_id, section_id }) => {
+        handleRegister={({
+          course_id,
+          section_id,
+          is_subscribed,
+          is_available,
+        }) => {
           _register({
+            is_available,
+            is_subscribed,
             course_id,
             section_id,
           });
@@ -162,14 +187,16 @@ const Courses = () => {
             <LoadingSpinner />
           </div>
         )}
-        {getCoursesToDisplay().map((course, i) => (
-          <CourseCard
-            _openCourseDetails={_openCourseDetails}
-            key={i}
-            course={course}
-            waitDetails={waitDetails}
-          />
-        ))}
+        {getCoursesToDisplay() &&
+          getCoursesToDisplay()?.length &&
+          getCoursesToDisplay()?.map((course, i) => (
+            <CourseCard
+              _openCourseDetails={_openCourseDetails}
+              key={i}
+              course={course}
+              waitDetails={waitDetails}
+            />
+          ))}
       </div>
     </AuthLayout>
   );

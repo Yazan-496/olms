@@ -1,3 +1,8 @@
+import { Dialog, DialogBody } from "@material-tailwind/react";
+import { useLayout } from "layout";
+import { useState } from "react";
+import API from "utils/API";
+
 export default function MyRegisterationsTable({
   handleOpenEdit,
   handleDelete,
@@ -9,13 +14,37 @@ export default function MyRegisterationsTable({
 }) {
   const TABLE_HEAD = [
     "ID",
-    "Student Name",
-    "Name",
-    "Description",
-    "file",
+    "Photo",
+    "Course Name",
+    "Course Description",
+    "price",
+    "Details",
     "Degree",
   ];
 
+  const { user, notify } = useLayout();
+  const [course, setCourse] = useState<any>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const _getCourse = (id: any) => {
+    API.get(
+      `api/courses/${id}`,
+      {},
+      (data) => {
+        setOpenModal(true);
+        setCourse(data?.data);
+      },
+      () => {},
+      {
+        Authorization: `Bearer ${user?.access_token}`,
+      }
+    );
+  };
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+  const handleOpen = () => {
+    setOpenModal(!openModal);
+  };
   return (
     <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -53,32 +82,37 @@ export default function MyRegisterationsTable({
                     index % 2 === 0 ? "" : "bg-gray-50"
                   }`}
                 >
+                  {" "}
                   <td className="px-6 py-4  text-start">
-                    {transaction?.user.national_number}
+                    {transaction?.course?.id}
                   </td>
                   <td className="px-6 py-4 font-medium  text-gray-900 whitespace-nowrap dark:text-white flex items-center space-x-2">
-                    {transaction?.user?.personal_picture && (
+                    {transaction?.course?.photo_path && (
                       <img
                         src={`${import.meta.env.VITE_BASE_URL}${
-                          transaction?.user?.personal_picture
+                          transaction?.course?.photo_path
                         }`}
-                        alt={transaction.user?.name}
+                        alt={transaction.course?.name}
                         className="w-10 h-10 rounded-full object-cover"
                       />
                     )}
-                    <span>{transaction.user?.name}</span>
+                  </td>
+                  <td className="px-6 py-4  text-start">
+                    {transaction?.course?.name}
+                  </td>
+                  <td className="px-6 py-4  text-start">
+                    {transaction?.course?.description}
                   </td>
                   <td className="px-6 py-4 text-start">
-                    {transaction.user?.email}
+                    {transaction.course?.price}
+                  </td>
+                  <td className="px-6 py-4 cursor-pointer hover:text-blue-500 text-start">
+                    <div onClick={() => _getCourse(transaction?.course?.id)}>
+                      Show Details
+                    </div>
                   </td>
                   <td className="px-6 py-4 text-start">
-                    {transaction.total_balance}
-                  </td>
-                  <td className="px-6 py-4 text-start">
-                    {transaction.deposit_Total}
-                  </td>
-                  <td className="px-6 py-4 text-start">
-                    {transaction.withdrawal_Total}
+                    {transaction.course?.degree}
                   </td>
                 </tr>
               ))}
@@ -86,6 +120,48 @@ export default function MyRegisterationsTable({
           ) : null}
         </table>
       </div>
+
+      {openModal && (
+        <Dialog
+          className="z-[999]"
+          open={openModal}
+          handler={handleOpen}
+          style={{
+            maxWidth: "90%",
+            minWidth: "60%",
+          }}
+        >
+          <DialogBody>
+            <div className="mt-[10px] mb-[10px]">
+              <div className="flex flex-row justify-between m-[5px]">
+                <div
+                  className={`w-full text-center items-center 
+                    shadow-sm p-[5px] m-[5px] border-[1px] 
+                    rounded-[10px] cursor-pointer
+                      `}
+                >
+                  <div className="text-[#8097ca] text-start">
+                    {course?.registered_section?.name}
+                  </div>
+                  <div className="text-[#7ae188] w-full text-start">
+                    Lessons:
+                  </div>
+                  <div>
+                    {course?.registered_section?.sessions?.map(
+                      (session: any, index: number) => (
+                        <div className="text-start ml-[10px]" key={index}>
+                          - {session?.lesson?.name} / {session?.date}{" "}
+                          {session?.time}
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </DialogBody>
+        </Dialog>
+      )}
     </>
   );
 }
