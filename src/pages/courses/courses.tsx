@@ -63,7 +63,7 @@ const Courses = () => {
   };
   const _register = (data: any) => {
     console.log(data?.is_available, "ssss");
-    if (!!data?.is_available) {
+    if (!data?.is_available) {
       notify({
         type: "warning",
         message: "This Course Is Not Availabel Now",
