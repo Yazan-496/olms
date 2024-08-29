@@ -17,127 +17,14 @@ import {
   UsersLogoSvg,
 } from "components/Svgs";
 import CanCall from "utils/ability";
+import { useLayout } from "layout";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   variant?: string;
 }
 
-const pages = [
-  {
-    name: "Users",
-    permission: "SHOW_USERS",
-    logo: <UsersLogoSvg />,
-    children: [
-      {
-        name: "Employees",
-        permission: "SHOW_EMPLOYEE",
-        logo: <UsersLogoSvg />,
-        route: "/employees",
-      },
-      {
-        name: "Students",
-        permission: "SHOW_STUDENT",
-        logo: <StudentsLogoSvg />,
-        route: "/students",
-      },
-      {
-        name: "Teachers",
-        permission: "SHOW_TEACHER",
-        logo: <TutorssLogoSvg />,
-        route: "/teachers",
-      },
-    ],
-  },
-  {
-    name: "Courses",
-    permission: "SHOW_COURSES",
-    logo: <CoursesLogoSvg />,
-    children: [
-      {
-        name: "Courses Managment",
-        permission: "SHOW_COURSE",
-        logo: <SettingLogoSvg />,
-        route: "/courses-managment",
-      },
-      {
-        name: "Registration",
-        permission: "SHOW_REGISTERATION",
-        logo: <SettingLogoSvg />,
-        route: "/registration",
-      },
-      {
-        name: "My Registration",
-        permission: "SHOW_MY_REGISTERATION",
-        logo: <CoursesLogoSvg />,
-        route: "/my-registration",
-      },
-      {
-        name: "Courses",
-        permission: "SHOW_MY_COURSES",
-        logo: <CoursesLogoSvg />,
-        route: "/courses",
-      },
-      {
-        name: "Categories",
-        permission: "SHOW_CATEGORY",
-        logo: <CategoriesLogoSvg />,
-        route: "/categories",
-      },
-    ],
-  },
-  {
-    name: "Finance",
-    permission: "SHOW_FINANCES",
-    logo: <FinanceLogoSvg />,
-    children: [
-      {
-        name: "Student Financial",
-        permission: "SHOW_FINANCE",
-        logo: <FinanceLogoSvg />,
-        route: "/financials/finance",
-      },
-      {
-        name: "Transactions",
-        permission: "SHOW_TRANSACTIONS",
-        logo: <TransactionsLogoSvg />,
-        route: "/financials/transactions",
-      },
-    ],
-  },
-  {
-    name: "Profile",
-    permission: "SHOW_PROFILE",
-    logo: <ProfileLogoSvg />,
-    children: [
-      {
-        name: "Personal Informations",
-        permission: "SHOW_PROFILE",
-        logo: <ProfileLogoSvg />,
-        route: "/profile/personal-informations",
-      },
-    ],
-  },
-  {
-    name: "Settings",
-    permission: "SHOW_PROFILE",
-    logo: <SettingLogoSvg />,
-    children: [
-      {
-        name: "My Account",
-        permission: "SHOW_PROFILE",
-        logo: <AccountLogoSvg />,
-        route: "/account",
-      },
-      {
-        name: "Logout",
-        permission: "",
-        logo: <LogoutLogoSvg />,
-        route: "/logout",
-      },
-    ],
-  },
-];
+
 
 const Sidebar: React.FC<SidebarProps> = ({
   sidebarOpen,
@@ -145,6 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   variant = "default",
 }) => {
   const location = useLocation();
+  const { translate } = useLayout()
   const { pathname } = location;
 
   const trigger = useRef<HTMLButtonElement | null>(null);
@@ -197,13 +85,127 @@ const Sidebar: React.FC<SidebarProps> = ({
       return normalizedPathname.startsWith(normalizedRoute);
     });
   };
+  const pages = [
+    {
+      name: translate("users"),
+      permission: "SHOW_USERS",
+      logo: <UsersLogoSvg />,
+      children: [
+        {
+          name: translate("employees"),
+          permission: "SHOW_EMPLOYEE",
+          logo: <UsersLogoSvg />,
+          route: "/employees",
+        },
+        {
+          name: translate("students"),
+          permission: "SHOW_STUDENT",
+          logo: <StudentsLogoSvg />,
+          route: "/students",
+        },
+        {
+          name: translate("teachers"),
+          permission: "SHOW_TEACHER",
+          logo: <TutorssLogoSvg />,
+          route: "/teachers",
+        },
+      ],
+    },
+    {
+      name: translate("courses"),
+      permission: "SHOW_COURSES",
+      logo: <CoursesLogoSvg />,
+      children: [
+        {
+          name: translate("courses_management"),
+          permission: "SHOW_COURSE",
+          logo: <SettingLogoSvg />,
+          route: "/courses-managment",
+        },
+        {
+          name: translate("registerations"),
+          permission: "SHOW_REGISTERATION",
+          logo: <SettingLogoSvg />,
+          route: "/registration",
+        },
+        {
+          name: translate("my_registerations"),
+          permission: "SHOW_MY_REGISTERATION",
+          logo: <CoursesLogoSvg />,
+          route: "/my-registration",
+        },
+        {
+          name: translate("my_courses"),
+          permission: "SHOW_MY_COURSES",
+          logo: <CoursesLogoSvg />,
+          route: "/courses",
+        },
+        {
+          name: translate("categories"),
+          permission: "SHOW_CATEGORY",
+          logo: <CategoriesLogoSvg />,
+          route: "/categories",
+        },
+      ],
+    },
+    {
+      name: translate("finance"),
+      permission: "SHOW_FINANCES",
+      logo: <FinanceLogoSvg />,
+      children: [
+        {
+          name: translate("student_financial"),
+          permission: "SHOW_FINANCE",
+          logo: <FinanceLogoSvg />,
+          route: "/financials/finance",
+        },
+        {
+          name: translate("transactions"),
+          permission: "SHOW_TRANSACTIONS",
+          logo: <TransactionsLogoSvg />,
+          route: "/financials/transactions",
+        },
+      ],
+    },
+    {
+      name: translate("profile"),
+      permission: "SHOW_PROFILE",
+      logo: <ProfileLogoSvg />,
+      children: [
+        {
+          name: translate("personal_informations"),
+          permission: "SHOW_PROFILE",
+          logo: <ProfileLogoSvg />,
+          route: "/profile/personal-informations",
+        },
+      ],
+    },
+    {
+      name: translate("settings"),
+      permission: "SHOW_PROFILE",
+      logo: <SettingLogoSvg />,
+      children: [
+        {
+          name: translate("my_account"),
+          permission: "SHOW_PROFILE",
+          logo: <AccountLogoSvg />,
+          route: "/account",
+        },
+        {
+          name: translate("logout"),
+          permission: "",
+          logo: <LogoutLogoSvg />,
+          route: "/logout",
+        },
+      ],
+    },
+  ];
   return (
     <div className="min-w-fit">
       {/* Sidebar backdrop (mobile only) */}
       <div
-        className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
-          sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-gray-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
         aria-hidden="true"
       ></div>
 
@@ -211,13 +213,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-64"
-        } ${
-          variant === "v2"
+        className={`flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-64"
+          } ${variant === "v2"
             ? "border-r border-gray-200 dark:border-gray-700/60"
             : "rounded-r-2xl shadow-sm"
-        }`}
+          }`}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-5 mt-5 pr-3 sm:px-2">
@@ -270,11 +270,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                         return (
                           <React.Fragment>
                             <div
-                              className={`block text-gray-800 text-lg dark:text-gray-100 truncate transition duration-150 ${
-                                pathname === page.name
-                                  ? ""
-                                  : "hover:text-gray-900 dark:hover:text-white"
-                              }`}
+                              className={`block text-gray-800 text-lg dark:text-gray-100 truncate transition duration-150 ${pathname === page.name
+                                ? ""
+                                : "hover:text-gray-900 dark:hover:text-white"
+                                }`}
                               onClick={(e) => {
                                 e.preventDefault();
                                 handleClick();

@@ -70,7 +70,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
         />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">
-            {user.name}
+            {user?.name}
           </span>
           <svg
             className="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500"
@@ -82,9 +82,8 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
       </button>
 
       <Transition
-        className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
-          align === "right" ? "right-0" : "left-0"
-        }`}
+        className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${align === "right" ? "right-0" : "left-0"
+          }`}
         show={dropdownOpen}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
@@ -101,7 +100,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200 dark:border-gray-700/60">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              {user.name}
+              {user?.name}
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 italic">
               {user?.role?.name || "Admin"}
@@ -123,7 +122,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
                 to="/logout"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                Sign Out
+                {translate("signout")}
               </Link>
             </li>
             <li>
@@ -132,7 +131,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({
                   htmlFor="language-select"
                   className="text-sm font-medium text-gray-600 dark:text-gray-100 mr-2"
                 >
-                  Language:
+                  {translate("language")}
                 </label>
                 <select
                   id="language-select"

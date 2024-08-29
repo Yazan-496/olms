@@ -1,11 +1,13 @@
 import { LoadingSpinner, TriangleSvg } from "components/Svgs";
+import { useLayout } from "layout";
 
 export default function TransactionsTable({
   transactions,
 }: {
   transactions: any;
 }) {
-  const TABLE_HEAD = ["ID", "Member", "Amount", "Date", "Transaction Type"];
+  const { translate } = useLayout()
+  const TABLE_HEAD = [translate("id"), translate("member"), translate("amount"), translate("date"), translate("transaction_type")];
 
   return (
     <>
@@ -40,9 +42,8 @@ export default function TransactionsTable({
               {transactions?.map((transaction: any, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
-                    index % 2 === 0 ? "" : "bg-gray-50"
-                  }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
+                    }`}
                 >
                   <td className="px-6 py-4  text-center">
                     {transaction?.financial?.user.national_number}
@@ -50,9 +51,8 @@ export default function TransactionsTable({
                   <td className="px-6 py-4 font-medium  text-gray-900 whitespace-nowrap dark:text-white flex items-center space-x-2">
                     {transaction?.financial?.user?.personal_picture && (
                       <img
-                        src={`${import.meta.env.VITE_BASE_URL}${
-                          transaction?.financial?.user?.personal_picture
-                        }`}
+                        src={`${import.meta.env.VITE_BASE_URL}${transaction?.financial?.user?.personal_picture
+                          }`}
                         alt={transaction?.financial.user?.name}
                         className="w-10 h-10 rounded-full object-cover"
                       />

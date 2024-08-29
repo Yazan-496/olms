@@ -1,4 +1,5 @@
 import { LoadingSpinner } from "components/Svgs";
+import { useLayout } from "layout";
 import CanCall from "utils/ability";
 
 export default function RegistrationTable({
@@ -10,8 +11,8 @@ export default function RegistrationTable({
   handleOpenEdit: (register: any) => void;
   handleDelete: (register: any) => void;
 }) {
-  console.log(registration, " registration");
-  const TABLE_HEAD = ["ID", "courses", "Started At", "Ended At", "Actions"];
+  const { translate } = useLayout()
+  const TABLE_HEAD = [translate("id"), translate("courses"), translate("started_at"), translate("ended_at"), translate("actions")];
 
   return (
     <>
@@ -71,7 +72,7 @@ export default function RegistrationTable({
                         href="#"
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
-                        Edit
+                        {translate("edit")}
                       </a>
                     </CanCall>
                     <CanCall permission="DELETE_REGISTERATION">
@@ -80,7 +81,7 @@ export default function RegistrationTable({
                         href="#"
                         className="font-medium text-red-600 dark:text-red-500 hover:underline"
                       >
-                        Delete
+                        {translate("delete")}
                       </a>
                     </CanCall>
                   </td>

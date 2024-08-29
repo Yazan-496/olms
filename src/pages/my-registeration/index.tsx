@@ -35,7 +35,7 @@ const MyRegisteratoins = () => {
   };
   const [registerations, setRegisterations] = useState<Array<any>>([]);
   const [course, setCourse] = useState<Course | null>(null);
-  const { user, notify } = useLayout();
+  const { user, translate } = useLayout();
 
   const _fetchData = () => {
     API.post(
@@ -44,7 +44,7 @@ const MyRegisteratoins = () => {
       (data) => {
         setRegisterations(data?.data);
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -58,7 +58,7 @@ const MyRegisteratoins = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"My Registerations"}>
+    <AuthLayout title={translate("my_registerations")}>
       <MyRegisterationsTable
         handleDelete={handleOpenDelete}
         handleOpenEdit={handleOpenEdit}

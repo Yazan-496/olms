@@ -37,7 +37,7 @@ const Students = () => {
     setOpenDelete(!openDelete);
   };
   const [users, setUsers] = useState([]);
-  const { user, notify } = useLayout();
+  const { user, translate } = useLayout();
 
   const _fetchData = () => {
     API.get(
@@ -60,7 +60,7 @@ const Students = () => {
   }, [open]);
 
   return (
-    <AuthLayout title={"Students"}>
+    <AuthLayout title={translate("students")}>
       <CanCall permission="CREATE_STUDENT">
         <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
           <Button
@@ -68,7 +68,7 @@ const Students = () => {
             className="border bg-[#fafafa] shadow-lg"
             onClick={handleOpenAdd}
           >
-            Add New Student
+            {(translate("add_new_student"))}
           </Button>
         </div>
       </CanCall>

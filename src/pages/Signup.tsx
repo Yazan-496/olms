@@ -7,7 +7,7 @@ import Swiper from "components/Swiper";
 import HeaderHome from "components/HeaderHome";
 
 const Signup: React.FC = () => {
-  const { notify, setUser } = useLayout();
+  const { notify, setUser, translate } = useLayout();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -72,7 +72,7 @@ items-center"
         <div className=" flex items-center  justify-center h-full w-full dark:bg-gray-950">
           <div className=" bg-white z-20 dark:bg-gray-900 w-[80%] shadow-md rounded-lg px-4 py-3 max-w-md">
             <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">
-              Create Account
+              {translate("create_account")}
             </h1>
             <form
               className=" grid grid-cols-2 gap-[10px]	"
@@ -84,14 +84,14 @@ items-center"
                     htmlFor="name"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                   >
-                    Username
+                    {translate("username")}
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Your name"
+                    placeholder={translate("your_name")}
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -102,7 +102,7 @@ items-center"
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                   >
-                    Email Address
+                    {translate("email_address")}
                   </label>
                   <input
                     type="email"
@@ -122,14 +122,14 @@ items-center"
                     htmlFor="password"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                   >
-                    Password
+                    {translate("password")}
                   </label>
                   <input
                     type="password"
                     id="password"
                     name="password"
                     className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Enter your password"
+                    placeholder={translate("enter_your_pass")}
                     value={formData.password}
                     onChange={handleChange}
                     required
@@ -140,14 +140,14 @@ items-center"
                     htmlFor="confirmPassword"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                   >
-                    Confirm Password
+                    {translate("confirm_password")}
                   </label>
                   <input
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
                     className="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Confirm your password"
+                    placeholder={translate("confirm_your_password")}
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required
@@ -160,16 +160,17 @@ items-center"
                   type="submit"
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-teal-gradient relative  bg-blue-teal-gradient relative bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-75"
                 >
-                  {loading ? <LoadingSpinner /> : "Sign Up"}
+                  {loading ? <LoadingSpinner /> : translate("signup")}
                 </button>
                 <div className="mt-4 text-center">
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Already have an account?{" "}
+                    {translate("already_have_account")}
+                    {" "}
                     <div
                       onClick={() => navigate("/login")}
                       className="cursor-pointer hover:underline text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                      Login
+                      {translate("login")}
                     </div>
                   </p>
                 </div>

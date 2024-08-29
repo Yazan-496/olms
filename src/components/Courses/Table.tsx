@@ -1,4 +1,5 @@
 import { LoadingSpinner } from "components/Svgs";
+import { useLayout } from "layout";
 import { NavLink } from "react-router-dom";
 import CanCall from "utils/ability";
 
@@ -13,18 +14,18 @@ export default function CoursesTable({
   handleOpenLessons: (course: any) => void;
   handleDelete: (course: any) => void;
 }) {
-  console.log(courses, " courses");
+  const { translate } = useLayout()
   const TABLE_HEAD = [
-    "ID",
-    "Name",
-    "Category",
-    "Description",
-    "Price",
-    "Teacher",
-    "Started At",
-    "Lessons",
-    "Projects",
-    "Actions",
+    translate("id"),
+    translate("name"),
+    translate("category"),
+    translate("description"),
+    translate("price"),
+    translate("teacher"),
+    translate("started_at"),
+    translate("lessons"),
+    translate("projects"),
+    translate("actions"),
   ];
 
   return (
@@ -60,17 +61,15 @@ export default function CoursesTable({
               {courses.map((course: any, index: number) => (
                 <tr
                   key={index}
-                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${
-                    index % 2 === 0 ? "" : "bg-gray-50"
-                  }`}
+                  className={`bg-white border-b !w-full dark:bg-gray-800 dark:border-gray-700 ${index % 2 === 0 ? "" : "bg-gray-50"
+                    }`}
                 >
                   <td className="px-2 py-2 text-start">{course?.id}</td>
                   <td className="min-w-[100px] px-2 py-2 font-medium  text-gray-900 whitespace-nowrap dark:text-white flex items-center space-x-2">
                     {course?.photo_path && (
                       <img
-                        src={`${import.meta.env.VITE_BASE_URL}${
-                          course?.photo_path
-                        }`}
+                        src={`${import.meta.env.VITE_BASE_URL}${course?.photo_path
+                          }`}
                         alt={course?.name}
                         className="w-10 h-10 rounded-full object-cover"
                       />
@@ -119,7 +118,7 @@ export default function CoursesTable({
                         href="#"
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
-                        Edit
+                        {translate("edit")}
                       </a>
                     </CanCall>
                     <CanCall permission="DELETE_COURSE">
@@ -128,7 +127,7 @@ export default function CoursesTable({
                         href="#"
                         className="font-medium text-red-600 dark:text-red-500 hover:underline"
                       >
-                        Delete
+                        {translate("delete")}
                       </a>
                     </CanCall>
                   </td>

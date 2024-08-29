@@ -115,7 +115,7 @@ const EditLessonsModal = ({
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${user.access_token}`,
+                        Authorization: `Bearer ${user?.access_token}`,
                         "Content-Type": "multipart/form-data",
                     },
                 }

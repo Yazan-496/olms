@@ -16,7 +16,7 @@ interface UserProfileData {
 }
 
 export const UserProfile: React.FC = () => {
-  const { user, notify } = useLayout();
+  const { user, notify, translate } = useLayout();
   const [formData, setFormData] = useState<UserProfileData>({
     name: "",
     father_name: "",
@@ -36,7 +36,7 @@ export const UserProfile: React.FC = () => {
       "/api/users/profile",
       {},
       (data) => data,
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -128,25 +128,25 @@ export const UserProfile: React.FC = () => {
         {" "}
         <div className="px-4 pt-5 sm:px-6">
           <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Details and information about the user.
+            {translate("details_and_info")}
           </p>
         </div>
         <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt className="text-sm font-medium flex items-center justify-start text-gray-500">
-            Profile Picture
+            {translate("profile_pic")}
+
           </dt>
           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
             <div className="  flex items-center justify-start dark:bg-gray-700 relative overflow-hidden group rounded-xl p-0 transition-all duration-500 transform">
               <div className="relative w-[150px] h-[150px] group/image  flex items-center justify-center">
                 {loadingFile ? (
                   <div className="w-36 flex items-center justify-center bg-black/20 border border-black/30 h-36 object-center object-cover rounded-full transition-all duration-500 delay-500 transform">
-                    Uploading...{" "}
+                    {translate("uploading")}{" "}
                   </div>
                 ) : (
                   <img
-                    src={`${import.meta.env.VITE_BASE_URL}${
-                      formData.personal_picture
-                    }`}
+                    src={`${import.meta.env.VITE_BASE_URL}${formData.personal_picture
+                      }`}
                     alt="User"
                     className="w-36 h-36 object-center object-cover rounded-full transition-all duration-500 delay-500 transform"
                   />
@@ -162,7 +162,7 @@ export const UserProfile: React.FC = () => {
                     onClick={(e) => e.stopPropagation()}
                     className="bg-blue-500 text-white px-4 py-2 rounded"
                   >
-                    Edit
+                    {translate("edit")}
                   </button>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export const UserProfile: React.FC = () => {
               {/* Father Name */}
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">
-                  Father's Name
+                  {translate("father_name")}
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
@@ -223,7 +223,7 @@ export const UserProfile: React.FC = () => {
               {/* Mother Name */}
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">
-                  Mother's Name
+                  {translate("mother_name")}
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
@@ -251,7 +251,7 @@ export const UserProfile: React.FC = () => {
               {/* National Number */}
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">
-                  National Number
+                  {translate("national_number")}
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
@@ -266,7 +266,7 @@ export const UserProfile: React.FC = () => {
               {/* Central Number */}
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">
-                  Central Number
+                  {translate("central_number")}
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
@@ -281,7 +281,7 @@ export const UserProfile: React.FC = () => {
               {/* Birth Date */}
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">
-                  Birth Date
+                  {translate("birthdate")}
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
@@ -303,13 +303,13 @@ export const UserProfile: React.FC = () => {
               onClick={handleSave}
               className="bg-blue-500 disabled:opacity-60 text-white px-4 py-2 rounded mr-2"
             >
-              {loading ? "Wait..." : "Save"}
+              {loading ? translate("wait") : translate("save")}
             </button>
             <button
               onClick={handleCancel}
               className="bg-gray-500 text-white px-4 py-2 rounded"
             >
-              Cancel
+              {translate("cancel")}
             </button>
           </>
         </div>
@@ -319,8 +319,9 @@ export const UserProfile: React.FC = () => {
 };
 
 const Profile: React.FC = () => {
+  const { translate } = useLayout()
   return (
-    <AuthLayout title={"Profile"}>
+    <AuthLayout title={translate("profile")}>
       <UserProfile />
     </AuthLayout>
   );
