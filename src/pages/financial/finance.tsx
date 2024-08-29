@@ -46,7 +46,7 @@ const Finance = () => {
       (data) => {
         setFinances(data?.data);
       },
-      (e) => {},
+      (e) => { },
       {
         Authorization: `Bearer ${user?.access_token}`,
       }
@@ -61,7 +61,7 @@ const Finance = () => {
 
   return (
     <AuthLayout title={"Finance"}>
-      <div className="w-full flex justify-end m-4 items-end">
+      <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
         <Button
           variant="text"
           className="border bg-[#fafafa] shadow-lg"

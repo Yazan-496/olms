@@ -90,7 +90,7 @@ export const router = [
     title: "Courses",
   },
   {
-    path: "/lessons/:id",
+    path: "/lessons",
     element: <ProtectedRoute element={<Lessons />} />,
     title: "Lessons",
   },

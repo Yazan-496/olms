@@ -63,7 +63,7 @@ const RegistrationManagment = () => {
   return (
     <AuthLayout title={"Registration Managment"}>
       <CanCall permission="CREATE_REGISTERATION">
-        <div className="w-full flex justify-end m-4 items-end">
+        <div className="w-full flex justify-end mt-[10px] mb-[10px] items-end">
           <Button
             variant="text"
             className="border bg-[#fafafa] shadow-lg"
